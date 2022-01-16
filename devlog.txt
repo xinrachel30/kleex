@@ -5,26 +5,7 @@ Clyde Sinclair
 
 pd 7
 ---------------------
-The Murder on the Hudson
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USAGE:
-* Replace all fields, angle brackets included, with specified info.
-  eg, pd <pd#> --> pd 3
-* Delete this instruction block once all teammates understand usage.
-
-devlog--
-Use keyboard shortcut to jump to end,
- replicate entry template,
- modify appropriately.
-
-zone of reflection--
-Flesh out each category whenever necessary, appropriate.
- Need not be fully filled in until end of project,
- but best done as you go along.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+The Unraveling
 
 /////////// Zone of Reflection \\\\\\\\\\\
 ------------------------------------------
@@ -77,4 +58,11 @@ Lindsay :: Made repo in compliance with structure on homework website
 2021-01-14
 --------------------------------------------------------------
 Xinqing :: Made devlog.txt in compliance with template. Drafted UML diagram
+==============================================================
+
+2021-01-16
+--------------------------------------------------------------
+Lindsay :: Worked on proposal and project details
+Xinqing :: Worked on proposal and project details
+Lindsay :: Uploaded flag.pdf
 ==============================================================
