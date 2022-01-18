@@ -66,3 +66,8 @@ Lindsay :: Worked on proposal and project details
 Xinqing :: Worked on proposal and project details
 Lindsay :: Uploaded flag.pdf
 ==============================================================
+
+2021-01-18
+--------------------------------------------------------------
+Xinqing :: .gitignore overwritten with “value-added” version, worked on UML diagram
+==============================================================
