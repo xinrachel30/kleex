@@ -14,8 +14,21 @@ public class PrivateInvestigator extends Character {
     name = input;
   }
 
-  public static String getName() {
-    return name;
+  public void regularEnergy() {
+    energy --;
+  }
+
+  public void lotEnergy() {
+    energy --;
+    energy --;
+  }
+
+  public void goodKnowledge() {
+    knowledge ++;
+  }
+
+  public void badKnowledge() {
+    knowledge --;
   }
 
 }

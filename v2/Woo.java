@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Woo {
 
-  protected static Character player;
+  protected static PrivateInvestigator player;
 
   public static void printStats(Character a) {
     System.out.println("Current Stats: -------------------\n" +
@@ -42,38 +42,43 @@ public class Woo {
 
   }
 
-  public static boolean dayOne() {
+  public static void dayOne() {
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"
     + "\nDay 1");
     printStats(player);
 
-    System.out.println("KENNA ECCLESTONE: This is just horrible..." +
-    "JIMMY ECCLESTONE: You're the one that insisted on going to those RIDICULOUS wine tastings. You could have spent more time with her..." +
-    "KENNA ECCLESTONE: You act as if you don't golf with your friends every weekend!");
+    System.out.println("KENNA ECCLESTONE: This is just horrible...\n" +
+    "JIMMY ECCLESTONE: You're the one that insisted on going to those RIDICULOUS wine tastings. You could have spent more time with her...\n" +
+    "KENNA ECCLESTONE: You act as if you don't golf with your friends every weekend!\n");
 
     Scanner in = new Scanner(System.in);
-    System.out.println("Kenna and Jimmy glare at each other. You feel the tension in the room. What do you do, " + player + "?");
-    System.out.println("1 - Talk to Kenna (-1 energy)");
-    System.out.println("2 - Talk to Jimmy (-1 energy)");
+    System.out.println("Kenna and Jimmy glare at each other. You feel the tension in the room. What do you do, " + player.name + "?\n");
+    System.out.println("1 - Talk to Kenna (-1 energy)\n");
+    System.out.println("2 - Talk to Jimmy (-1 energy)\n");
     String choice = in.nextLine();
-    if (choice == "1") {
-      System.out.println("KENNA ECCLESTONE: It's difficult caring for a 16 year old girl, let alone having to do it by myself!");
-      PrivateInvestigator.updateEnergy();
-      goodKnowledge();
+    if (choice.equals("1")) {
+      System.out.println("KENNA ECCLESTONE: It's difficult caring for a 16 year old girl, let alone having to do it by myself!\n");
+      player.regularEnergy();
+      player.goodKnowledge();
     }
-    else if (choice == "2") {
-      System.out.println("JIMMY ECCLESTONE: You don't understand how much that woman aggravates me. I spend enough time with my daughter. My wife just has a flair for dramatics.");
+    else if (choice.equals("2")) {
+      System.out.println("JIMMY ECCLESTONE: You don't understand how much that woman aggravates me. I spend enough time with my daughter. My wife just has a flair for dramatics.\n");
+      player.regularEnergy();
+      player.goodKnowledge();
     }
     else {
       System.out.println("You stand there in silence. (-2 energy)");
+      player.lotEnergy();
+      player.badKnowledge();
     }
 
-    System.out.println("YOU: Let's cut to the chase. When was the last time you saw your daughter?" +
-    "You notice that the couple has stopped their bickering and genuinely look deep in thought." +
-    "YOU: ...?" +
-    "KENNA ECCLESTONE: Well, to what I can recall, I last saw her with her friends." +
-    "Jimmy nods his head in agreement." +
-    "JIMMY ECCLESTONE: I never did like them scallywags. They always played around with my cards");
+    System.out.println("YOU: Let's cut to the chase. When was the last time you saw your daughter?\n" +
+    "You notice that the couple has stopped their bickering and genuinely look deep in thought.\n" +
+    "YOU: ...?\n" +
+    "KENNA ECCLESTONE: Well, to what I can recall, I last saw her with her friends.\n" +
+    "Jimmy nods his head in agreement.\n" +
+    "JIMMY ECCLESTONE: I never did like them scallywags. They always played around with my cards\n");
+
   }
 
   public static void dayTwo() {
