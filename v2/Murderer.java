@@ -7,8 +7,9 @@ FP: Show Us What You Got
 
 public class Murderer extends Character {
 
-  pulic Murderer() {
-
+  public Murderer() {
+    currency = 1_000_000_000;
+    knowledge = 100;
   }
 
 }

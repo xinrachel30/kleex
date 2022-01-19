@@ -24,7 +24,7 @@ wow! oo!...
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-we changed ___ to ___ bc...
+we changed 7 days to 5 days bc we prefer business days
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,4 +70,6 @@ Lindsay :: Uploaded flag.pdf
 2021-01-18
 --------------------------------------------------------------
 Xinqing :: .gitignore overwritten with “value-added” version, worked on UML diagram
+Lindsay :: Worked on UML diagram, Worked on day 1 dialogue and choice mechanics
+Xinqing :: Worked on dialogue, Added card game
 ==============================================================

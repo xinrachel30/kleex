@@ -7,8 +7,15 @@ FP: Show Us What You Got
 
 public class PrivateInvestigator extends Character {
 
-  public PrivateInvestigator() {
-    energy = 5;
+  protected String name;
+
+  public PrivateInvestigator(String input) {
+    currency = 10;
+    name = input;
+  }
+
+  public static String getName() {
+    return name;
   }
 
 }
