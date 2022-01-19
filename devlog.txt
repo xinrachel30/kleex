@@ -71,5 +71,10 @@ Lindsay :: Uploaded flag.pdf
 --------------------------------------------------------------
 Xinqing :: .gitignore overwritten with “value-added” version, worked on UML diagram
 Lindsay :: Worked on UML diagram, Worked on day 1 dialogue and choice mechanics
-Xinqing :: Worked on dialogue, Added card game
+Xinqing :: Worked on dialogue, Added card minigame
+==============================================================
+
+2021-01-19
+--------------------------------------------------------------
+Xinqing :: Added rigging option for card minigame and card game dialogue
 ==============================================================
