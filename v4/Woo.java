@@ -508,11 +508,33 @@ protected static Civilian friend3 = new Civilian();
     System.out.println("\nIt seems like " + friend2 + " is about to badmouth Kenna. What will you do?");
     System.out.println("1 - Defend Kenna (-2 energy)");
     System.out.println("2 - Sympathize with Jimmy (-2 energy)");
-    System.out.println("3 - Change the subject (-1 energy)");
+    System.out.println("3 - Change the subject (-0 energy)");
 
     Scanner in2 = new Scanner(System.in);
     choice = in.nextLine();
 
+    if (choice.equals("1") && player.getEnergy() < 2) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.lotEnergy();
+      System.out.println("YOU: Hey, she's been having a hard time as well. At least she's trying her best to help out with the investigation." +
+      friend2 + ": I suppose. She seems nervous as well. I saw her pacing around for nearly an hour yesterday at the pier.");
+    }
+    else if (choice.equals("2") && player.getEnergy() < 2) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("2")) {
+      player.lotEnergy();
+      System.out.println("YOU: Right? She's insufferable! It feels like she's using this as an excuse to feud with her husband" +
+      friend2 + ": Couldn't agree more. They've been having marital problems since Marisa was 6. I wonder why he doesn't leave her.");
+    }
+    else if (!choice.equals("3")) {
+      wrongChoice();
+    }
+
+    System.out.println("YOU: Let's stay focused. Now that I think about it, the golf club seems pret-ty ?" +
+    friend2 + ": Not sure. ")
 
 
   }

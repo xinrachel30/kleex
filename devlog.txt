@@ -83,5 +83,5 @@ Lindsay :: Added more day 2 story dialogue, discussed a more cohesive story line
 
 2021-01-20
 --------------------------------------------------------------
-Xinqing :: Fixed errors in Woo.java, fixed mechanics for the creating of friends/Civilians 
+Xinqing :: Fixed errors in Woo.java, fixed mechanics for the creating of friends/Civilians , added more day 3 dialogue
 ==============================================================

@@ -13,7 +13,7 @@ public class PrivateInvestigator extends Character {
 
   public PrivateInvestigator(String input) {
     currency = 10;
-    name = input;
+    name = input; 
   }
 
   public void regularEnergy() {
