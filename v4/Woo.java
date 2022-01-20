@@ -365,7 +365,7 @@ public class Woo {
       else if (choice.equals("1")) {
         player.regularEnergy();
         player.upKnowledge();
-        System.out.println("Well, I wouldn't say so. We're all a tight knit group since we met each other at around the same time.");
+        System.out.println("I wouldn't say so. We're a tight knit group since we met each other at around the same time.");
       }
       else if (choice.equals("2")) {
 
@@ -471,8 +471,8 @@ protected static Civilian friend3 = new Civilian();
     System.out.println("1 - " + tempfriend2);
     System.out.println("2 - " + tempfriend3);
 
-    Scanner in = new Scanner(System.in);
-    String choice = in.nextLine();
+    Scanner in1 = new Scanner(System.in);
+    String choice = in1.nextLine();
     if (choice.equals("1")) {
       friend2.setName(tempfriend2);
       friend3.setName(tempfriend3);
@@ -497,6 +497,8 @@ protected static Civilian friend3 = new Civilian();
     friend2 + ": All of us. " + friend1 + ", " + "Marisa, " + friend3 + ", me. We pick up after ourselves when we hang out at Marisa's, but he constantly complains about picking up after us.\n" +
     "YOU: Still. Quite the strange reaction to a murder. Where's the empathy?");
 
+    player.upKnowledge();
+
     System.out.println("You look around the shed and notice a large arsenal of tools and supplies.");
 
     System.out.println("YOU: Did you see the body before he disposed of it? I'm sure there was some sort of evidence that would be useful right about now.\n" +
@@ -504,6 +506,8 @@ protected static Civilian friend3 = new Civilian();
     "YOU: Head trauma. Unfortunately for us, almost everything in this shed could've been used to inflict head trauma. Doesn't narrow it down much.\n" +
     friend2 + " looks around as well. A golf club catches their eye.\n" +
     friend2 + ": A golf club. Marisa's dad is a huge fan of golfing. I wonder how he's handling all of this. It must be hard, especially with Kenna around.");
+
+    player.upKnowledge();
 
     System.out.println("\nIt seems like " + friend2 + " is about to badmouth Kenna. What will you do?");
     System.out.println("1 - Defend Kenna (-2 energy)");
@@ -518,25 +522,57 @@ protected static Civilian friend3 = new Civilian();
     }
     else if (choice.equals("1")) {
       player.lotEnergy();
-      System.out.println("YOU: Hey, she's been having a hard time as well. At least she's trying her best to help out with the investigation." +
-      friend2 + ": I suppose. She seems nervous as well. I saw her pacing around for nearly an hour yesterday at the pier.");
+      System.out.println("YOU: Hey, she's been having a hard time as well. At least she's trying her best to help out with the investigation.\n" +
+      friend2 + ": I suppose. She seems nervous as well. I saw her pacing around for nearly an hour yesterday at the pier.\n");
     }
     else if (choice.equals("2") && player.getEnergy() < 2) {
       System.out.println("You don't have enough energy to do that!");
     }
     else if (choice.equals("2")) {
       player.lotEnergy();
-      System.out.println("YOU: Right? She's insufferable! It feels like she's using this as an excuse to feud with her husband" +
+      System.out.println("YOU: Right? She's insufferable! It feels like she's using this as an excuse to feud with her husband\n" +
       friend2 + ": Couldn't agree more. They've been having marital problems since Marisa was 6. I wonder why he doesn't leave her.");
     }
     else if (!choice.equals("3")) {
       wrongChoice();
     }
 
-    System.out.println("YOU: Let's stay focused. Now that I think about it, the golf club seems pret-ty ?" +
-    friend2 + ": Not sure. ")
+    System.out.println("YOU: Let's stay focused. Now that I look at it again, the golf club seems a lot dirtier compared to the other tools.\n" +
+    friend2 + ": I guess Marisa's dad must've played pretty recently then.\n" +
+    "YOU: If he played BlackJack with his friends 2 days ago, then he must've played pretty recently. He'd be in the area of the kill.\n" +
+    "YOU: And the butler is attentive to cleanliness, but didn't bother to clean the golf club?\n" +
+    "YOU: I haven't seen Kenna at all either. She seems pretty busy with all those phone calls...\n" +
+    friend2 + ": Hah... It could be anyone! How are we getting anywhere with this?\n");
 
+    player.upKnowledge();
 
+    System.out.println("You follow " + friend2 + " as they leave the shed. " + friend2 + " puts a hand on their face and looks out into the garden.");
+
+    System.out.println("What do you want to do now?");
+    System.out.println("1 - Ask if Marisa seemed 'off' the last time they saw her. (-2 energy)");
+    System.out.println("2 - Find someone to question (-1 energy)");
+    System.out.println("3 - Leave " + friend2 + " for now (-0 energy)\n");
+
+    Scanner in3 = new Scanner(System.in);
+    choice = in3.nextLine();
+
+    if (choice.equals("1") && player.getEnergy() < 2) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("2") && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      System.out.println("I heard from " + friend1 + " that you and your friends last saw Marisa at the beach. Did she seem off at all?\n" +
+      friend2 + ": Not that I know of? I mean, she usually seems a bit down because her parents are constantly fighting. It's not out of the ordinary.\n" +
+      "YOU: I see. Is there anything else you can tell me about that day?\n" +
+      friend2 + ": Now that I'm thinking about it... Usually, it's the head butler that drives us. For some reason, he got sick that day. But he never gets sick.\n" +
+      "YOU: A butler dead set on cleanliness falling ill. Interesting. Thank you, " + friend2 ".\n");
+      player.upKnowledge();
+    }
+    else if (choice.equals("2")) {
+      System.out.println("You two ")
+    }
   }
 
   public static void dayFour() {
