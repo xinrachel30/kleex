@@ -28,6 +28,16 @@ public class PrivateInvestigator extends Character {
     knowledge ++;
   }
 
+  public void Kenna() {
+    relationKenna ++;
+  }
+
+  public void Jimmy() {
+    relationJimmy ++;
+  }
+
+  //-------------------------------------------------------//
+
   public void upEnergy() {
     energy += 5;
   }
@@ -46,14 +56,6 @@ public class PrivateInvestigator extends Character {
 
   public void draw(){
     currency += 30;
-  }
-
-  public void Kenna() {
-    relationKenna ++;
-  }
-
-  public void Jimmy() {
-    relationJimmy ++;
   }
 
   public int getEnergy() {

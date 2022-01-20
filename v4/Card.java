@@ -11,7 +11,7 @@ public class Card {
   public Card() {
       number = (int)(Math.random() * 13 + 1);
       suitrank = (int)(Math.random() * 4);
-      suit = suits[suitrank];
+      suit = suits[suitrank]; 
   }
 
 //Rigged Card
