@@ -60,21 +60,20 @@ public class Woo {
       System.out.println("KENNA ECCLESTONE: It's difficult caring for a 16 year old girl, let alone having to do it by myself!");
       player.Kenna();
       player.regularEnergy();
-      player.goodKnowledge();
+      player.upKnowledge();
     }
     else if (choice.equals("2")) {
       System.out.println("JIMMY ECCLESTONE: You don't understand how much that woman aggravates me. I spend enough time with my daughter. My wife just has a flair for dramatics.");
       player.Jimmy();
       player.regularEnergy();
-      player.goodKnowledge();
+      player.upKnowledge();
     }
     else {
       System.out.println("You stand there in silence. (-2 energy)");
       player.lotEnergy();
-      player.badKnowledge();
     }
 
-    System.out.println("YOU: Let's cut to the chase. When was the last time you saw your daughter?" +
+    System.out.println("YOU: (Cough) Let's cut to the chase. When was the last time you saw your daughter?" +
     "\nYou notice that the couple has stopped their bickering and genuinely look deep in thought." +
     "\nYOU: ...?" +
     "\nKENNA ECCLESTONE: Well, to what I can recall, I last saw her with her friends." +
@@ -84,7 +83,7 @@ public class Woo {
     "\nJimmy sighs and turns to you." +
     "\nJIMMY ECCLESTONE: How about you talk to them friends then, huh?" +
     "\nJimmy then faces Kenna." +
-    "\nJIMMY ECCLESTONE: Give 'em the contact information. I've got things to do.");
+    "\nJIMMY ECCLESTONE: Give " + player.name + "the contact information. I've got things to do.");
 
     Scanner in2 = new Scanner(System.in);
     System.out.println("1 - Stop Jimmy (-1 energy)");
@@ -93,7 +92,7 @@ public class Woo {
     if (choice.equals("1")) {
       player.Jimmy();
       player.regularEnergy();
-      player.goodKnowledge();
+      player.upKnowledge();
       System.out.println("JIMMY ECCLESTONE: What? I've already made plans with a couple of lads. I'm trying to make a gain in BlackJack... Are you judging me for it?");
       Scanner in3 = new Scanner(System.in);
       System.out.println("1 - No. (-1 energy)");
@@ -133,22 +132,72 @@ public class Woo {
 
     Scanner in4 = new Scanner(System.in);
     System.out.println("1 - I'll take you up on your offer. (-1 energy)");
-    System.out.println("2 - I'll just go home. (-1 energy)");
+    System.out.println("2 - I'll just head to the casino. (-1 energy)");
     choice = in4.nextLine();
     if (choice.equals("1")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println("KENNA ECCLESTONE: All right, my head butler will bring you to the bathroom." +
+      "\nWith a snap of Kenna's fingers, the doors are opened by a middle aged man. You assume that he is the head butler." +
+      "\nKENNA ECCLESTONE: This is Private Investigator" + player.name + ". Please escort" + player.name + "to the bathroom and then to the exit." +
+      "\nThe man nods his head." +
+      "\nHEAD BUTLER: Hello, PI" + player.name + ". Please, follow me." +
+      "\nYou trail after the head butler after casting a look at Kenna, noticing that she seemed visibly upset while talking into the phone.");
 
+      Scanner in5 = new Scanner(System.in);
+      System.out.println("Do you pity Kenna?");
+      System.out.prinhtln("1 - Yes.");
+      System.out.println("2 - No.");
+      choice = in5.nextLine();
+      if (choice.equals("1")) {
+        player.Kenna();
+      }
+      else if (choice.equals("2")) {
+        player.Jimmy();
+      }
+      else {
+        System.out.println("You are neutral.");
+      }
+
+      Scanner in6 = new Scanner(System.in);
+      System.out.println("You and the head butler walk silently down the hallway. You walk for quite some time. Do you...");
+      System.out.println("1 - Start up conversation");
+      System.out.println("2 - Continue to walk in silence");
+      System.out.println("3 - Stop following the head butler and try to go into another room");
+      choice = in6.nextLine();
+      if (choice.equals("1")) {
+
+      }
+      else if (choice.equals("2")) {
+
+      }
+      else if (choice.equals("3")) {
+        System.out.println("You do so, but the head butler is quick to stop you from entering any other rooms." +
+        "\nHEAD BUTLER: What do you think you're doing?" +
+        "\nYou are unable to form a coherent response and thusly get kicked out of the mansion. Additionally, once Kenna was notified of your behavior, you are also fired from the case." +
+        "/n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GAME OVER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        break;
+      }
+      else {
+
+      }
     }
     else if (choice.equals("2")) {
 
     }
     else {
-
+      System.out.println("You decide to go back home. (-2 energy)");
+      player.lotEnergy();
     }
-
-      }
+  }
+}
 
   public static void dayTwo() {
-
+    if (player.knowledge <= 0) {
+      System.out.println("You wake up knowing nothing about the case. Where do you start? You don't know. You decide to quit.");
+      System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GAME OVER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+      break;
+    }
   }
 
   public static void dayThree() {

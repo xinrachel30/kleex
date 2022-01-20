@@ -53,9 +53,9 @@ public class PrivateInvestigator extends Character {
     relationJimmy ++;
   }
 
-  public String tired() {
+  public void tired() {
     if (energy == 0) {
-      System.out.println("You don't have enough energy. You decide to go home to rest.")
+      System.out.println("You don't have enough energy. You decide to go home to rest.");
     }
     else {
       
