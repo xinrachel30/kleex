@@ -20,7 +20,8 @@ maybe some of these will move into the Obs.Ovrcm section...
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wow! oo!...
+to exit out of the program, signifying the end of the game, we learned of System.exit(0)
+- this is not to be confused with break(), which only exits out of a loop
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,4 +78,5 @@ Xinqing :: Worked on dialogue, Added card minigame
 2021-01-19
 --------------------------------------------------------------
 Xinqing :: Added rigging option for card minigame and card game dialogue
+Lindsay :: Added more story dialogue 
 ==============================================================

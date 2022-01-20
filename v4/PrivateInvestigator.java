@@ -21,16 +21,19 @@ public class PrivateInvestigator extends Character {
   }
 
   public void lotEnergy() {
-    energy --;
-    energy --;
+    energy -= 2;
   }
 
-  public void goodKnowledge() {
+  public void upKnowledge() {
     knowledge ++;
   }
 
-  public void badKnowledge() {
-    knowledge --;
+  public void upEnergy() {
+    energy += 5;
+  }
+
+  public void dayEnergy() {
+    energy += 10;
   }
 
   public void payForGame() {
@@ -53,13 +56,8 @@ public class PrivateInvestigator extends Character {
     relationJimmy ++;
   }
 
-  public void tired() {
-    if (energy == 0) {
-      System.out.println("You don't have enough energy. You decide to go home to rest.");
-    }
-    else {
-      
-    }
+  public int getEnergy() {
+    return energy;
   }
 
 }
