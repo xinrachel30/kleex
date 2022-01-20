@@ -17,6 +17,16 @@ public class Civilian extends Character {
     isAlive = true;
   }
 
+  public Civilian() {
+    currency = 100;
+    knowledge = 10;
+    isAlive = true;
+  }
+
+  public void setName(String input) {
+    name = input;
+  }
+
   public void die() {
     isAlive = false;
   }

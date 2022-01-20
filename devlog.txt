@@ -80,3 +80,8 @@ Xinqing :: Worked on dialogue, Added card minigame
 Xinqing :: Added rigging option for card minigame and card game dialogue, discussed a more cohesive story line, added more day 3 story dialogue, worked on flowchart
 Lindsay :: Added more day 2 story dialogue, discussed a more cohesive story line, worked on flowchart
 ==============================================================
+
+2021-01-20
+--------------------------------------------------------------
+Xinqing :: Fixed errors in Woo.java, fixed mechanics for the creating of friends/Civilians 
+==============================================================

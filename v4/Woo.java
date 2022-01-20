@@ -11,7 +11,7 @@ import java.util.*;
 public class Woo {
 
   protected static PrivateInvestigator player;
-  protected ArrayList<String> friends = new ArrayList<>();
+  protected static ArrayList<String> friends = new ArrayList<>();
 
   public static void printStats(Character a) {
     System.out.println("Current Stats: -------------------" +
@@ -186,7 +186,7 @@ public class Woo {
     System.out.println("2 - I'll just head to the casino. (-1 energy)");
     System.out.println("3 - I'll go home. (-0 energy)");
     choice = in4.nextLine();
-    if (choice.equals("1") && player.getEnergy < 2) {
+    if (choice.equals("1") && player.getEnergy() < 2) {
       System.out.println("You don't have enough energy to do that!");
     }
     else if (choice.equals("2") && player.getEnergy() < 1) {
@@ -208,7 +208,7 @@ public class Woo {
       System.out.println("2 - No. (-1 energy)");
       System.out.println("3 - You're neutral. (0 energy)");
       choice = in5.nextLine();
-      if ((choice.equals("1") || choice.equals("2")) && player.getEnergy < 1) {
+      if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
         System.out.println("You don't have enough energy to do that!");
       }
       else if (choice.equals("1")) {
@@ -333,7 +333,7 @@ public class Woo {
       System.out.println("Do you ask why exactly they go to the beach every weekend?");
       System.out.println("1 - Yes. (-1 energy)");
       System.out.println("2 - No. (-0 energy)");
-      choice = in4.readLine();
+      choice = in4.nextLine();
       if (choice.equals("1") && player.getEnergy() < 1) {
         System.out.println("You don't have enough energy to do that!");
       }
@@ -358,7 +358,7 @@ public class Woo {
       System.out.println("Do ask if they're the closest to Marisa in their friend group?");
       System.out.println("1 - Yes. (-1 energy)");
       System.out.println("2 - No. (-0 energy)");
-      choice = in5.readLine();
+      choice = in5.nextLine();
       if (choice.equals("1") && player.getEnergy() < 1) {
         System.out.println("You don't have enough energy to do that!");
       }
@@ -378,6 +378,10 @@ public class Woo {
     }
   }
 
+protected static Civilian friend1 = new Civilian();
+protected static Civilian friend2 = new Civilian();
+protected static Civilian friend3 = new Civilian();
+
   public static void dayTwo() {
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     + "\nDay 2");
@@ -396,15 +400,15 @@ public class Woo {
       friends.add("Jonas");
     String choice = in.nextLine();
     if (choice.equals("1")) {
-      Civilian friend1 = new Civilian("KLAUS");
+      friend1.setName("KLAUS");
       friends.remove("KLAUS");
     }
     else if (choice.equals("2")) {
-      Civilian friend1 = new Civilian("ADELINE");
+      friend1.setName("ADELINE");
       friends.remove("ADELINE");
     }
     else if (choice.equals("3")) {
-      Civilian friend1 = new Civilian("JONAS");
+      friend1.setName("JONAS");
       friends.remove("JONAS");
     }
     else {
@@ -451,8 +455,8 @@ public class Woo {
     friend1.die();
 
     System.out.println("As you pull into the mansion, you hear a commotion. Two panicked kids run up to you.");
-    Civilian tempfriend1 = new Civilian (friends.get(0));
-    Civilian tempfriend2 = new Civilian (friends.get(1));
+    String tempfriend2 = friends.get(0);
+    String tempfriend3 = friends.get(1);
     System.out.println(tempfriend2 + ": YOU! You're the private investigator, right?" +
     "\nYOU: Yes, that's me. What's going on here?\n" +
     tempfriend3 + ": " + friend1 + " is dead because of you!" +
@@ -467,15 +471,15 @@ public class Woo {
     System.out.println("1 - " + tempfriend2);
     System.out.println("2 - " + tempfriend3);
 
-    Scannner in = new Scanner(System.in);
+    Scanner in = new Scanner(System.in);
     String choice = in.nextLine();
     if (choice.equals("1")) {
-      Civilian friend2 = new Civilian(tempfriend2);
-      Civilian friend3 = new Civilian(tempfriend3);
+      friend2.setName(tempfriend2);
+      friend3.setName(tempfriend3);
     }
     else if (choice.equals("2")) {
-      Civilian friend2 = new Civilian(tempfriend3);
-      Civilian friend3 = new Civilian(tempfriend2);
+      friend2.setName(tempfriend3);
+      friend3.setName(tempfriend2);
     }
     else {
       wrongChoice();
@@ -498,7 +502,7 @@ public class Woo {
     System.out.println("YOU: Did you see the body before he disposed of it? I'm sure there was some sort of evidence that would be useful right about now.\n" +
     friend2 + ": I did, for a bit. The one thing that stood out was a bruise on " + friend1 + "'s head.\n'" +
     "YOU: Head trauma. Unfortunately for us, almost everything in this shed could've been used to inflict head trauma. Doesn't narrow it down much.\n" +
-    + friend2 + "looks around as well. A golf club catches their eye.\n" +
+    friend2 + " looks around as well. A golf club catches their eye.\n" +
     friend2 + ": A golf club. Marisa's dad is a huge fan of golfing. I wonder how he's handling all of this. It must be hard, especially with Kenna around.");
 
     System.out.println("\nIt seems like " + friend2 + " is about to badmouth Kenna. What will you do?");
@@ -506,8 +510,8 @@ public class Woo {
     System.out.println("2 - Sympathize with Jimmy (-2 energy)");
     System.out.println("3 - Change the subject (-1 energy)");
 
-    Scannner in2 = new Scanner(System.in);
-    choice2 = in.nextLine();
+    Scanner in2 = new Scanner(System.in);
+    choice = in.nextLine();
 
 
 
