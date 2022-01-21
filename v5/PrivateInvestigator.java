@@ -64,9 +64,8 @@ public class PrivateInvestigator extends Character {
     System.out.println("You have " + energy + " energy.");
   }
 
-  public void amountKnowledge() {
-    System.out.println("You have" + knowledge + "knowledge.");
+  public int getKnowledge() {
+    return knowledge;
   }
 
 }
-

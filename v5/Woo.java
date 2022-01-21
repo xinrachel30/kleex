@@ -402,7 +402,7 @@ public class Woo {
     System.out.println("1 - How would you describe Marisa -- by that, I mean her personality? (-1 energy)");
     System.out.println("2 - Does Marisa.. disappear.. often? (-1 energy)");
     player.amountEnergy();
-    choice = in6.nextLine();
+    String choice = in6.nextLine();
     if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
       System.out.println("You don't have enough energy to do that!");
     }
@@ -427,9 +427,9 @@ public class Woo {
 
         System.out.println("/Let's see if you have enough knowledge points..." +
         "\nIs what " + friend1 + "saying make sense? You think..." +
-        "\n" + player.amountKnowledge() +
+        "\n" + player.getKnowledge() +
         "You need 10 knowledge.");
-        if (player.amountKnowledge() > 10) {
+        if (player.getKnowledge() > 10) {
           System.out.println("It does.");
           player.upKnowledge();
         }
@@ -575,7 +575,7 @@ public class Woo {
       System.out.println("Your conversation with " + friend1 + "comes to a close when you see a lady by the cashier that looks familiar." +
       "\nYour suspicions are proven true when the lady turns around... revealing it to be Kenna." +
       "\nKenna also notices you and makes her way over." +
-      "\nKENNA ECCLESTONE: Well, if it isn't " + player.name + " and " + friend1 " . Lovely to see you both here." +
+      "\nKENNA ECCLESTONE: Well, if it isn't " + player + " and " + friend1 + ". Lovely to see you both here." +
       "\n" + friend1 + ": Hello, Mrs. Ecclestone." +
       "\nYOU: Hello, Kenna.");
 
@@ -585,23 +585,26 @@ public class Woo {
       System.out.println("3 - Just stare at her. ()");
       player.amountEnergy();
       choice = in11.nextLine();
-      if
-
-    }
-    else if (choice.equals("2")) {
-      ": Okay then, I'll meet you there. I'll be wearing a green shirt with the design of the queen of spades." +
-      "\nThe call ends, and you leave your house after grabbing the neccessary goods." +
-      "\n-------------------------------------------------------------------------------" +
-      "\n                                  MARBLIN DINE                                 " +
-      "\n-------------------------------------------------------------------------------");
-      walkinDay2();
-      questionSet1();
-      questionSet2();
-      questionSet3();
-    }
-    else {
-      wrongChoice();
-    }
+    //   if () {
+    //
+    //   }
+    //
+    // else if (choice.equals("2")) {
+    //   System.out.println(
+    //   ": Okay then, I'll meet you there. I'll be wearing a green shirt with the design of the queen of spades." +
+    //   "\nThe call ends, and you leave your house after grabbing the neccessary goods." +
+    //   "\n-------------------------------------------------------------------------------" +
+    //   "\n                                  MARBLIN DINE                                 " +
+    //   "\n-------------------------------------------------------------------------------");
+    //   walkinDay2();
+    //   questionSet1();
+    //   questionSet2();
+    //   questionSet3();
+    // }
+    // else {
+    //   wrongChoice();
+    // }
+  }
 }
 
   public static void dayThree() {
@@ -776,7 +779,7 @@ public class Woo {
             System.out.println("You don't have enough energy to do that!");
           }
           else if (choice.equals("1")) {
-            Sustem.out.println("HEAD MAID: The head butler was supposed to inspect the kitchen last night. He's usually diligent with his tasks, but the cooking crew reported that he arrived an hour late, seemingly out of breath.");
+            System.out.println("HEAD MAID: The head butler was supposed to inspect the kitchen last night. He's usually diligent with his tasks, but the cooking crew reported that he arrived an hour late, seemingly out of breath.");
             System.out.println("YOU: Hmm... interesting.");
           }
           else if (choice.equals("2")) {
@@ -790,6 +793,35 @@ public class Woo {
           else if (choice.equals("4")) {
             System.out.println("HEAD MAID: Great! I trust that you will solve the case soon, PI" + player + ".");
             hasQuestions = false;
+          }
+          else {
+            wrongChoice();
+          }
+
+          System.out.println("YOU: Thank you for your time.\n" +
+          "HEAD MAID: Happy to help! I trust that you'll solve this case soon, PI " + player + ". " + friend2 + ", you can show " + player + " where the entrance is, right? It's getting late.\n" +
+          friend2 + ": Yes, good night!\n");
+
+          System.out.println("You and " + friend2 + " leave the mansion.");
+          System.out.println("YOU: I don't think she did it.\n" +
+          friend2 + ": I could've told you that. Sharon would never hurt anyone.\n" +
+          "YOU: Well, it is quite dark outside. We should part ways. I'll see you tomorrow.\n" +
+          friend2 + ": Alright. Stay safe\n");
+
+          System.out.println("You and " + friend2 + " part ways. What do you want to do now?");
+
+          System.out.println("1 - Go to the casino (-1 energy)");
+          System.out.println("2 - Go home (-0 energy)");
+
+          if (choice.equals("1") && player.getEnergy() < 1) {
+            System.out.println("You don't have enough energy to do that!");
+          }
+          else if (choice.equals("1")) {
+            player.regularEnergy();
+            gotoCasino();
+          }
+          else if (choice.equals("2")) {
+
           }
           else {
             wrongChoice();

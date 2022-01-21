@@ -7,7 +7,7 @@ pd 7
 ---------------------
 The Unraveling
 
-/////////// Zone of Reflection \\\\\\\\\\\ 
+/////////// Zone of Reflection \\\\\\\\\\\
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,5 +83,12 @@ Lindsay :: Added more day 2 story dialogue, discussed a more cohesive story line
 
 2021-01-20
 --------------------------------------------------------------
-Xinqing :: Fixed errors in Woo.java, fixed mechanics for the creating of friends/Civilians , added more day 3 dialogue
+Xinqing :: Fixed errors in Woo.java, fixed mechanics for the creating of friends/Civilians , added to day 3 dialogue
+Lindsay :: Working on day 2 flowchart, added to day 2 story dialogue
+Xinqing :: Finished day 1 flowchart, added to day 3 story dialogue
+==============================================================
+
+2021-01-21
+--------------------------------------------------------------
+Xinqing :: Fixed errors in Woo.java, Finish day 3 dialogue
 ==============================================================
