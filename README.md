@@ -14,5 +14,6 @@ investigate the disappearance of the girl and report their findings to Marisa’
 parents, Jimmy and Kenna.
 
 *How-to-Launch Instructions:*
-1. Compile and run Woo.java
-2. Respond to any given choices, which may change your fate
+1. Compile Woo.java by typing ```javac Woo.java``` into the terminal
+2. Run Woo.java by typing ```java Woo``` into the terminal
+3. Respond to any given choices, which may change your fate
