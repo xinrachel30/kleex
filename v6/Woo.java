@@ -82,6 +82,52 @@ public class Woo {
     System.out.println("You return home via Uber and the day ends.");
   }
 
+  public static void playAgainstBobo() {
+    System.out.println("You paid BOBO 10 dollars.");
+    player.payForGame();
+
+    System.out.println("BOBO: So you think you can beat me? I am the most skilled card picker!" +
+    "\nPick a card, any card!");
+    Card playerCard = new Card();
+    System.out.println("BOBO: Let's see... your card is a " + playerCard + "!");
+    Card boboCard = new Card(7);
+    System.out.println("BOBO: Woah! I got a " + boboCard + "!");
+
+    if (playerCard.compareTo(boboCard) == 1) {
+      System.out.println("BOBO: ..." +
+      "\nBOBO: I... I lost?" +
+      "\nBOBO: How did this happen?");
+
+      player.winGame();
+      System.out.println("You received 50 dollars!");
+    }
+    else if (playerCard.compareTo(boboCard) == -1) {
+      System.out.println("BOBO: As predicted! Ahahaha!!");
+    }
+    else {
+      System.out.println("BOBO: Huh. How did we get the same card? Weird." +
+      "\nBOBO: Well, I'm feeling nice today. Here's 30 dollars!");
+
+      player.draw();
+    }
+  }
+
+  public static void playAgainstJojo() {
+    System.out.println("You paid JOJO 10 dollars.");
+    //player.payForGame();
+
+    Deck BlackJack = new Deck();
+    System.out.println(BlackJack.deck.size());
+
+    int input = (int)(Math.random() * 52);
+    System.out.println(input);
+    System.out.println(BlackJack.get(input));
+    BlackJack.remove(input);
+
+    System.out.println(BlackJack.deck.size());
+
+  }
+
   public static void dayOne() {
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     + "\nDay 1");
@@ -854,59 +900,30 @@ public class Woo {
     printStats(player);
   }
 
-  public static void playAgainstBobo() {
-    System.out.println("You paid BOBO 10 dollars.");
-    player.payForGame();
-
-    System.out.println("BOBO: So you think you can beat me? I am the most skilled card picker!" +
-    "\nPick a card, any card!");
-    Card playerCard = new Card();
-    System.out.println("BOBO: Let's see... your card is a " + playerCard + "!");
-    Card boboCard = new Card(7);
-    System.out.println("BOBO: Woah! I got a " + boboCard + "!");
-
-    if (playerCard.compareTo(boboCard) == 1) {
-      System.out.println("BOBO: ..." +
-      "\nBOBO: I... I lost?" +
-      "\nBOBO: How did this happen?");
-
-      player.winGame();
-      System.out.println("You received 50 dollars!");
-    }
-    else if (playerCard.compareTo(boboCard) == -1) {
-      System.out.println("BOBO: As predicted! Ahahaha!!");
-    }
-    else {
-      System.out.println("BOBO: Huh. How did we get the same card? Weird." +
-      "\nBOBO: Well, I'm feeling nice today. Here's 30 dollars!");
-
-      player.draw();
-    }
-  }
-
   public static void main(String[] args) {
-    boolean continuePlay = true;
-    while (continuePlay) {
-      playGame();
-      System.out.println("Do you wish to try again?");
-      System.out.println("1 - Yes!");
-      System.out.println("2 - No...");
-
-      Scanner in = new Scanner(System.in);
-      String choice = in.nextLine();
-
-      if (choice.equals("1")) {
-        System.out.println("Starting new game now...");
-      }
-      else if (choice.equals("2")) {
-        System.out.println("Quitting game...");
-        continuePlay = false;
-      }
-      else {
-        System.out.println("That's not an option. Automatically quitting game...");
-        continuePlay = false;
-      }
-    }
+    playAgainstJojo();
+    // boolean continuePlay = true;
+    // while (continuePlay) {
+    //   playGame();
+    //   System.out.println("Do you wish to try again?");
+    //   System.out.println("1 - Yes!");
+    //   System.out.println("2 - No...");
+    //
+    //   Scanner in = new Scanner(System.in);
+    //   String choice = in.nextLine();
+    //
+    //   if (choice.equals("1")) {
+    //     System.out.println("Starting new game now...");
+    //   }
+    //   else if (choice.equals("2")) {
+    //     System.out.println("Quitting game...");
+    //     continuePlay = false;
+    //   }
+    //   else {
+    //     System.out.println("That's not an option. Automatically quitting game...");
+    //     continuePlay = false;
+    //   }
+    // }
   }
 
 
