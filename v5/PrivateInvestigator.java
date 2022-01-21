@@ -16,10 +16,6 @@ public class PrivateInvestigator extends Character {
     name = input;
   }
 
-  public String toString() {
-    return name;
-  }
-
   public void regularEnergy() {
     energy --;
   }
@@ -31,16 +27,6 @@ public class PrivateInvestigator extends Character {
   public void upKnowledge() {
     knowledge ++;
   }
-
-  public void Kenna() {
-    relationKenna ++;
-  }
-
-  public void Jimmy() {
-    relationJimmy ++;
-  }
-
-  //-------------------------------------------------------//
 
   public void upEnergy() {
     energy += 5;
@@ -62,8 +48,25 @@ public class PrivateInvestigator extends Character {
     currency += 30;
   }
 
+  public void Kenna() {
+    relationKenna ++;
+  }
+
+  public void Jimmy() {
+    relationJimmy ++;
+  }
+
   public int getEnergy() {
     return energy;
   }
 
+  public void amountEnergy() {
+    System.out.println("You have " + energy + " energy.");
+  }
+
+  public void amountKnowledge() {
+    System.out.println("You have" + knowledge + "knowledge.");
+  }
+
 }
+
