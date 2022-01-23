@@ -11,12 +11,19 @@ The Unraveling
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wow we so BOSS bc...
+in the beginning, we were stumped since we couldn't think of a way to force the
+player to choose a valid option
+--> we initially decided to force a GAME OVER (wrongChoice())if the player were to choose an invalid
+    option as a way to ensure the player would follow the instructions
+--> we then thought of a while loop where the condition is true -- thus repeat itself --
+    and that to exit the loop, one would have to choose a valid option (since there would
+    be a break;)
+    --> we used this on day 5 to force the player to choose if they believe the butler,
+        but decided to keep earlier days the same.
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-blah blah pesky bug...
-maybe some of these will move into the Obs.Ovrcm section...
+
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -25,11 +32,22 @@ to exit out of the program, signifying the end of the game, we learned of System
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-we changed 7 days to 5 days bc we prefer business days
+- we changed 7 days to 5 days because 7 days was overly ambitious
+- we chose to add visuals in days 4-5 since the dialogue was getting heavy and we
+  didn't want the player to get bored midst reading blocks of text
+- we were originally just going to have a knowledge instance variable for
+  PrivateInvestigator.java, but added instance variables like clueCafe and clueCoffee
+  so that we can make specific dialogue based on details that the player knows.
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tales of wisdom gained...
+Before doing this project, we could have spent more time on discussing a cohesive storyline. This 
+  includes discussing any plotholes and characters' relationships with each other. This proved as an
+  issue at times as we worked on different days -- different parts in the story -- and we had to be
+  check in with each other, confirming that we had a mutual agreeance.
+--> Preparation is key!!
+
+
 ||||||||||||||||||||||||||||||||||||||||||
 
 
@@ -77,8 +95,8 @@ Xinqing :: Worked on dialogue, Added card minigame
 
 2021-01-19
 --------------------------------------------------------------
-Xinqing :: Added rigging option for card minigame and card game dialogue, discussed a more cohesive story line, added more day 3 story dialogue, worked on flowchart
-Lindsay :: Added more day 2 story dialogue, discussed a more cohesive story line, worked on flowchart
+Xinqing :: Added rigging option for card minigame and card game dialogue, discussed a more cohesive story line, added more day 3 story dialogue, worked on part of day 1 flowchart
+Lindsay :: Added more day 2 story dialogue, discussed a more cohesive story line, worked on part of day 1 flowchart
 ==============================================================
 
 2021-01-20
@@ -90,5 +108,12 @@ Xinqing :: Finished day 1 flowchart, added to day 3 story dialogue
 
 2021-01-21
 --------------------------------------------------------------
-Xinqing :: Fixed errors in Woo.java, Finish day 3 dialogue
+Xinqing :: Fixed errors in Woo.java, Finished day 3 dialogue, Started working on Deck.java to make more card games available, Started dialogue for BlackJack game
+==============================================================
+
+2021-01-22
+--------------------------------------------------------------
+Lindsay :: Worked on day 2 dialogue
+Xinqing :: Finished day 4 dialogue, Worked on day 5, Added to Zone of Reflection
+Lindsay :: Finished day 4 dialogue, worked on day 5, Made visuals, Added to Zone of Refelection
 ==============================================================
