@@ -41,7 +41,7 @@ MID-DEVELOPMENT DESIGN CHANGES
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Before doing this project, we could have spent more time on discussing a cohesive storyline. This 
+Before doing this project, we could have spent more time on discussing a cohesive storyline. This
   includes discussing any plotholes and characters' relationships with each other. This proved as an
   issue at times as we worked on different days -- different parts in the story -- and we had to be
   check in with each other, confirming that we had a mutual agreeance.
@@ -116,4 +116,10 @@ Xinqing :: Fixed errors in Woo.java, Finished day 3 dialogue, Started working on
 Lindsay :: Worked on day 2 dialogue
 Xinqing :: Finished day 4 dialogue, Worked on day 5, Added to Zone of Reflection
 Lindsay :: Finished day 4 dialogue, worked on day 5, Made visuals, Added to Zone of Refelection
+==============================================================
+
+2021-01-23
+--------------------------------------------------------------
+Lindsay :: Finished day 2 dialoue, Worked on finishing day 5 dialogue, Solved errors
+Xinqing :: Worked on finishing day 5 dialogue, Added day 6 dialogue, Added comments for each ending bracket (conciseness)
 ==============================================================
