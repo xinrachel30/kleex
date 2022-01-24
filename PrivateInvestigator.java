@@ -4,7 +4,7 @@ APCS pd07
 FP: Show Us What You Got
 2022-01-21
 */
-
+ 
 public class PrivateInvestigator extends Character {
 
   protected String name;
@@ -15,6 +15,10 @@ public class PrivateInvestigator extends Character {
   protected boolean clueCoffee = false;
   protected boolean clueMansion = false;
   protected boolean clueBeach = false;
+  protected boolean clueKennaRant = false;
+  protected boolean clueAbsentParents = false;
+  protected boolean clueWrongKenna = false;
+  protected boolean clueJimmyButler = false;
 
   public PrivateInvestigator(String input) {
     currency = 10;
@@ -64,6 +68,15 @@ public class PrivateInvestigator extends Character {
   }
 
 //Get Values -----------------------------------------------------------------//
+
+  public boolean checkMoney() {
+    if (currency >= 10) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   public int getEnergy() {
     return energy;

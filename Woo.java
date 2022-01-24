@@ -16,12 +16,12 @@ public class Woo {
   protected static Civilian friend2 = new Civilian();
   protected static Civilian friend3 = new Civilian();
 
-  public static void printStats(Character a) {
+//Game Methods ---------------------------------------------------------------//
+
+  public static void printStats(PrivateInvestigator a) {
     System.out.println("Current Stats: -------------------" +
     "\nMoney: " + a.currency +
     "\nKnowledge: "+ a.knowledge +
-    "\nHealth: "+ a.hp +
-    "\nStrength: "+ a.strength +
     "\nEnergy: "+ a.energy +
     "-------------------\n");
   }
@@ -35,6 +35,10 @@ public class Woo {
     "\nYou have 5 days to solve the case." +
     "\n" +
     "\nHave in mind that failure to choose a valid option will result in a GAME OVER." +
+    "\n______________" +
+    "\n|_    __  _____|                         O                               O            " +
+    "\n /    _(_|" +
+    "\n/____/" +
     "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
     Scanner in = new Scanner(System.in);
@@ -61,36 +65,48 @@ public class Woo {
     System.exit(0);
   }
 
+//Casino Methods -------------------------------------------------------------//
+
   public static void gotoCasino() {
+
     player.regularEnergy();
     System.out.println("You walk into the Moonlit 251 Casino. You walk past lines and lines of slot machines and tables of calculating players.");
 
-    while (true) {
-    System.out.println("\nWhat do you want to play now, PI?");
-    Scanner casino = new Scanner(System.in);
-    System.out.println("1 - Play against Bobo, a master at picking high value cards from a standard deck of cards (-1 energy)\n");
-    System.out.println("2 - Return home (-0 energy)\n");
+    int timesPlayed = 0;
+    while (timesPlayed < 3) {
+      System.out.println("\nWhat do you want to play now, " + player.name + "?");
+      Scanner casino = new Scanner(System.in);
+      System.out.println("1 - Play against Bobo, a master at picking high value cards from a standard deck of cards (-1 energy)\n");
+      System.out.println("2 - Play against Jojo, a dealer of a classic card game: BlackJack (-1 energy)\n");
+      System.out.println("3 - Return home (-0 energy)\n");
 
-    String choice = casino.nextLine();
-    if (choice.equals("1") && player.getEnergy() < 1) {
-      System.out.println("You don't have enough energy! A bouncer kicks you out.");
-      break;
-    }
-    else if (choice.equals("1")) {
-      player.regularEnergy();
-      playAgainstBobo();
-    }
-    else if (choice.equals("2")) {
-      break;
-    }
-    else {
-      wrongChoice();
-    }
-    }
-    System.out.println("You return home via Uber and the day ends.");
+      String choice = casino.nextLine();
+      if ((!choice.equals("3")) && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy! A bouncer kicks you out.");
+        return;
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        timesPlayed ++;
+        playAgainstBobo();
+      }
+      else if (choice.equals("2")) {
+        player.regularEnergy();
+        timesPlayed ++;
+        playAgainstJojo();
+      }
+      else if (choice.equals("3")) {
+        break;
+      }
+      else {
+        wrongChoice();
+      }
+    } //end repeating games
+    System.out.println("\nYou return home via Uber and the day ends.");
   }
 
   public static void playAgainstBobo() {
+    Character BOBO = new Civilian("BOBO");
     System.out.println("You paid BOBO 10 dollars.");
     player.payForGame();
 
@@ -121,20 +137,491 @@ public class Woo {
   }
 
   public static void playAgainstJojo() {
+    Character JOJO = new Civilian("JOJO");
     System.out.println("You paid JOJO 10 dollars.");
-    //player.payForGame();
+    player.payForGame();
+
+    player.blackJackValue = 0;
+    JOJO.blackJackValue = 0;
+
+    System.out.println("JOJO: Heya! This is BlackJack. Rules goes: Aces are 1s and jokers/queens/kings are 10s." +
+    "\nJOJO: The goal is to get as close to 21 as possible without going over. Of course, you're up against me.");
 
     Deck BlackJack = new Deck();
-    System.out.println(BlackJack.deck.size());
 
-    int input = (int)(Math.random() * 52);
-    System.out.println(input);
-    System.out.println(BlackJack.get(input));
-    BlackJack.remove(input);
+    Card firstCard = BlackJack.dealCard();
+    System.out.println("You receive a... " + firstCard);
+    player.updtBlackJack(firstCard);
 
-    System.out.println(BlackJack.deck.size());
+    Card firstCardJojo = BlackJack.dealCard();
+    System.out.println("Jojo receives a... " + firstCardJojo);
+    JOJO.updtBlackJack(firstCardJojo);
+
+    Card secondCard = BlackJack.dealCard();
+    System.out.println("You receive a... " + secondCard);
+    player.updtBlackJack(secondCard);
+
+    Card secondCardJojo = BlackJack.dealCard();
+    System.out.println("Jojo puts her card face down on the table.");
+    JOJO.updtBlackJack(secondCardJojo);
+
+    System.out.println("\nRight now, your total is... " + player.getBlackJack());
+    System.out.println("Do you want to get another card?");
+    System.out.println("1 - Yes");
+    System.out.println("2 - No");
+
+    boolean contin;
+
+    Scanner wantCard = new Scanner(System.in);
+    String choice = wantCard.nextLine();
+
+    if (choice.equals("1")) {
+      contin = true;
+    }
+    else {
+      contin = false;
+    }
+
+    Card newCard;
+
+    while (contin) {
+      newCard = BlackJack.dealCard();
+      System.out.println("You receive a... " + newCard);
+      player.updtBlackJack(newCard);
+      System.out.println("Right now, your total is... " + player.getBlackJack());
+      if (player.bust()) {
+        System.out.println("\nJOJO: That's greater than 21! You lost!");
+        return;
+      }
+
+      System.out.println("\nDo you want to get another card?");
+      System.out.println("1 - Yes");
+      System.out.println("2 - No");
+
+      Scanner wantMoreCards = new Scanner(System.in);
+      choice = wantMoreCards.nextLine();
+
+      if (choice.equals("1")) {
+        contin = true;
+      }
+      else {
+        contin = false;
+      }
+    }
+
+      while (JOJO.getBlackJack() < 17) {
+        newCard = BlackJack.dealCard();
+        System.out.println("Jojo takes another card.");
+        JOJO.updtBlackJack(secondCardJojo);
+      }
+
+      if (JOJO.bust()) {
+        System.out.println("JOJO: Oh no! My total is " + JOJO.getBlackJack() + ". I guess victory is your's.");
+        System.out.println("You received 50 dollars!");
+        player.winGame();
+        return;
+      }
+      else if (JOJO.getBlackJack() > player.getBlackJack()) {
+        System.out.println("JOJO: Woo! My total is " + JOJO.getBlackJack() + ", which is higher than your's!");
+        return;
+      }
+      else if (player.getBlackJack() > JOJO.getBlackJack()) {
+        System.out.println("JOJO: Wow. My total is " + JOJO.getBlackJack() + ", which is lower than your's.");
+        System.out.println("JOJO: I guess victory is your's.");
+        System.out.println("You received 50 dollars!");
+        player.winGame();
+        return;
+      }
+      else {
+        System.out.println("JOJO: Huh. I guess our card totals are the same. Mine is " + JOJO.getBlackJack() + ", too.");
+        System.out.println("JOJO: Well, I'm feeling nice today, so I'll give you $30.");
+        player.draw();
+      }
 
   }
+
+//Additional Day Methods -----------------------------------------------------//
+
+  public static void walkinDay2() {
+    System.out.println("\nYou walk into the cafe, which was surprisingly bustling. You scan the premise for a person wearing a green shirt with the queen of spades." +
+    "\nYou see a teenager that fits the description and walk up to them." +
+    "\nYOU: Hello... are you " + friend1 + "?" +
+    "\n" + friend1 + ": Yes. That's me. I assume you know my name via how you got my phone number. What's your name?" +
+    "\nYOU: My name is " + player.name + "." +
+    "\n" + friend1 + ": Nice to meet you." +
+    "\nYOU: Right back at you. Now, let's get started. Shall we?" +
+    "\n" + friend1 + " nods their head.");
+  }
+
+  public static void questionSet1() {
+    Scanner in3 = new Scanner(System.in);
+    System.out.println("What will you ask?");
+    System.out.println("1 - When was the last time you saw Marisa? (-1 energy)");
+    System.out.println("2 - Can you describe your relationship with Marisa more? (-1 energy)");
+    player.amountEnergy();
+    String choice = in3.nextLine();
+    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      player.clueBeach = true;
+      System.out.println(friend1 + ": Well, the last time I saw Marisa was when our friend group went to the beach. We go to the beach every weekend.");
+
+      Scanner in4 = new Scanner(System.in);
+      System.out.println("Do you ask why exactly they go to the beach every weekend?");
+      System.out.println("1 - Yes. (-1 energy)");
+      System.out.println("2 - No. (-0 energy)");
+      player.amountEnergy();
+      choice = in4.nextLine();
+      if (choice.equals("1") && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy to do that!");
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        player.upKnowledge();
+        player.clueAbsentParents = true;
+        System.out.println(friend1 + ": Well, Marisa's parents don't really spend that much time with her. They're always busy with work or arguing with each other.");
+      }
+      else if (choice.equals("2")) {
+
+      }
+      else {
+        wrongChoice();
+      }
+    }
+    else if (choice.equals("2")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println(friend1 + ": Marisa and I have been friends for two years -- since freshman year of high school. We are really good friends. We hang out with each other everyday, and tell each other practically everything.");
+
+      Scanner in5 = new Scanner(System.in);
+      System.out.println("Do ask if they're the closest to Marisa in their friend group?");
+      System.out.println("1 - Yes. (-1 energy)");
+      System.out.println("2 - No. (-0 energy)");
+      player.amountEnergy();
+      choice = in5.nextLine();
+      if (choice.equals("1") && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy to do that!");
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        player.upKnowledge();
+        System.out.println(friend1 + ": I wouldn't say so. We're a tight knit group since we met each other at around the same time.");
+      }
+      else if (choice.equals("2")) {
+
+      }
+      else {
+        wrongChoice();
+      }
+    }
+    else {
+      wrongChoice();
+    }
+  }
+
+  public static void questionSet2() {
+    Scanner in6 = new Scanner(System.in);
+    System.out.println("What will you ask?");
+    System.out.println("1 - How would you describe Marisa -- by that, I mean her personality? (-1 energy)");
+    System.out.println("2 - Does Marisa.. disappear.. often? (-1 energy)");
+    player.amountEnergy();
+    String choice = in6.nextLine();
+    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println(friend1 + ": Marisa is a fun person to be around. She's quite bubbly and socialable. Though, she's touchy with the subject of her parents...");
+
+      Scanner in7 = new Scanner(System.in);
+      System.out.println("Do you ask " + friend1 + " to elaborate on how Marisa reacts to the subject of her parents?");
+      System.out.println("1 - Yes. (-1 energy)");
+      System.out.println("2 - No. (-0 energy)");
+      player.amountEnergy();
+      choice = in7.nextLine();
+      if (choice.equals("1") && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy to do that!");
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        player.upKnowledge();
+        System.out.println(friend1 + ": We try not to bring it up, of course. But whenever someone did, she would just become stonefaced and be kinda mean. But, that's just her defense mechanism.");
+
+        System.out.println("/Let's see if you have enough knowledge points.../" +
+        "\n/Is what " + friend1 + " saying make sense? You think.../" +
+        "\n" + "You have " + player.getKnowledge() + " knowledge." +
+        "/You need 10 knowledge./");
+        if (player.getKnowledge() > 10) {
+          System.out.println("It does.");
+          player.upKnowledge();
+        }
+        else {
+          System.out.println("It doesn't.");
+        }
+      }
+      else if (choice.equals("2")) {
+
+      }
+      else {
+        wrongChoice();
+      }
+    } //end of describing marisa's personality
+    else if (choice.equals("2")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println(friend1 + ": Actually, yes. During those times, she usually just isolates herself at her mansion. We respect her privacy.");
+
+      Scanner in8 = new Scanner(System.in);
+      System.out.println("Do you ask if " + friend1 + " contacts Marisa during those times?");
+      System.out.println("1 - Yes. (-1 energy)");
+      System.out.println("2 - No. (-0 energy)");
+      player.amountEnergy();
+      choice = in8.nextLine();
+      if (choice.equals("1") && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy to do that!");
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        System.out.println(friend1 + ": No, since she doesn't really answer any texts or calls... She completely shuts everyone out.");
+      }
+      else if (choice.equals("2")) {
+
+      }
+      else {
+        wrongChoice();
+      }
+    }
+    else {
+      wrongChoice();
+    }
+  }
+
+  public static void questionSet3() {
+    Scanner in9 = new Scanner(System.in);
+    System.out.println("What do you ask?");
+    System.out.println("1 - How long have you been aware of Marisa's disappearance? (-1 energy)");
+    System.out.println("2 - Are you concerned about Marisa's absence? (-1 energy)");
+    player.amountEnergy();
+    String choice = in9.nextLine();
+    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println(friend1 + ": Well, Marisa usually isolates herself for a week... It's already been ten days, so I guess since three days ago.");
+    }
+    else if (choice.equals("2")) {
+      player.regularEnergy();
+      System.out.println(friend1 + ": Of course! I'm her friend... so why wouldn't I be?");
+    }
+    else {
+      wrongChoice();
+    }
+
+    Scanner in10 = new Scanner(System.in);
+    System.out.println("Do you ask if " + friend1 + " has done anything to find out about Marisa's absence?");
+    System.out.println("1 - Yes. (-1 energy)");
+    System.out.println("2 - No. (-0 energy)");
+    choice = in10.nextLine();
+    player.amountEnergy();
+    if (choice.equals("1") && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      player.clueMansion = true;
+      System.out.println(friend1 + ": I went over to Marisa's mansion and tried talking to her parents, but the head butler dismissed me before I had the chance to.");
+    }
+    else if (choice.equals("2")) {
+
+    }
+    else {
+      wrongChoice();
+    }
+  }
+
+  public static void kennaRant() {
+    System.out.println("\nKENNA ECCLESTONE: " + friend1 + " , you remember Jimmy, right?" +
+    "\n" + friend1 + " nods their head." +
+    "\nKENNA ECCLESTONE: Well, Jimmy has become even more insufferable.");
+
+    Scanner in14 = new Scanner(System.in);
+    System.out.println("You think...");
+    System.out.println("1 - What has he done now? (-1 energy)");
+    System.out.println("2 - He's done something wrong? (-1 energy)");
+    System.out.println("3 - ... (-0 energy)");
+    player.amountEnergy();
+    String choice = in14.nextLine();
+    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      player.Kenna();
+    }
+    else if (choice.equals("2")) {
+      player.regularEnergy();
+      player.Jimmy();
+    }
+    else if (choice.equals("3")) {
+
+    }
+    else {
+      wrongChoice();
+    }
+
+    System.out.println("KENNA ECCLESTONE: We have our regular arguments here and there, of course." +
+    "\nEven I must admit that it can be about the simplest things -- like how he eats his food sloppily or how he comes home late after golfing with his friends." +
+    "\nYou sense hesitance in her voice." +
+    "\nKENNA ECCLESTONE: But, this time -- last night -- it was just too much." +
+    "\nKenna looks hesitant on what she is about to say.");
+
+    Scanner in15 = new Scanner(System.in);
+    System.out.println("Do you urge her to continue?");
+    System.out.println("1 - Yes. (-2 energy)");
+    System.out.println("2 - No. (-0 energy)");
+    player.amountEnergy();
+    choice = in15.nextLine();
+    if (choice.equals("1") && player.getEnergy() < 2) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.lotEnergy();
+      player.Kenna();
+      player.clueKennaRant = true;
+      System.out.println("You nod your head, urging her to continue." +
+      "\nKENNA ECCLESTONE: Everything has just been so hard, especially after Marisa's disappearance.");
+
+      if (player.clueAbsentParents == true) {
+        Scanner in16 = new Scanner(System.in);
+        System.out.println("You know that " + friend1 + " told you that Kenna and Jimmy haven't been present in Marisa's life. Should you bring that up?");
+        System.out.println("1 - Yes.");
+        System.out.println("2 - No.");
+        choice = in16.nextLine();
+        if (choice.equals("1")) {
+          player.clueWrongKenna = true;
+          System.out.println("YOU: I thought you weren't present in Marisa's life, though." +
+          "\nKenna tenses up." +
+          "\nKENNA ECCLESTONE: ..What are you trying to imply? I was a part of her life as much as I could have. I'm a chief executive officer... my job demands a lot out of me." +
+          "\nThere is a moment of awkwardness accompanied with silence." +
+          "\nKENNA ECCLESTONE: I think that I'm just going to go..." +
+          "\nIt's clear that Kenna is not comfortable with continuing the conversation and leaves.");
+
+        }
+        else if (choice.equals("2")) {
+          System.out.println("You nod your head." +
+          "\nKENNA ECCLESTONE: Lately, Jimmy has just been so easily tempered..." +
+          "\nShe notices the skeptical look in your eyes." +
+          "\nKENNA ECCLESTONE: Oh, never with me. Not with me.");
+
+          Scanner in17 = new Scanner(System.in);
+          System.out.println("What do you ask?");
+          System.out.println("1 - What has he done? (-1 energy)");
+          System.out.println("2 - Say nothing. (-0 energy)");
+          player.amountEnergy();
+          choice = in17.nextLine();
+          if (choice.equals("1") && player.getEnergy() < 1) {
+            System.out.println("You don't have enough energy to do that!");
+          }
+          else if (choice.equals("1")) {
+            player.regularEnergy();
+            player.upKnowledge();
+            player.Kenna();
+            player.clueJimmyButler = true;
+            System.out.println("KENNA ECCLESTONE: He's been insisting on drinking beer every night, shutting himself in the guest room. He's been quick to anger whenever something doesn't go his way. I've also noticed that he's been arguing with the butler recently." +
+            "\nI brought that up with him, and he threw a fit. I have never seen him more mad." +
+            "\nBut, alas, I don't want to speak of this anymore." +
+            "\nWith that, Kenna gets up and leaves.");
+          }
+          else if (choice.equals("2")) {
+
+          }
+          else {
+            wrongChoice();
+          }
+
+          System.out.println("KENNA ECCLESTONE: I don't know... The house has just emptier than usual." +
+          "\nKenna puts a smile on her face." +
+          "\nKENNA ECCLESTONE: Nonetheless, I must continue on. Goodbye to you both." +
+          "\nKenna gets up and leaves the cafe.");
+        }
+        else {
+          wrongChoice();
+        }
+      }
+
+      System.out.println("");
+    }
+    else if (choice.equals("2")) {
+      System.out.println("KENNA ECCLESTONE: Actually, I shouldn't say anything..." +
+      "It's clear that Kenna is not comfortable with continuing the conservation and leaves.");
+    }
+    else {
+      wrongChoice();
+    }
+  }
+
+  public static void questionJimmy() {
+    Scanner in5 = new Scanner(System.in);
+    System.out.println("What do you ask him?");
+    System.out.println("1 - Where are you heading to? (-1 energy)");
+    System.out.println("2 - Where did you come from? (-1 energy)");
+    System.out.println("3 - I have no questions. I don't want to talk to him anymore.");
+    player.amountEnergy();
+    String choice = in5.nextLine();
+    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println("JIMMY ECCLESTONE: I'm actually going to play golf with some old friends." +
+      "\nYOU: Where?" +
+      "\nJIMMY: In New York, actually. I'm going to spend some time there. I don't know when I'm coming back." +
+      "\nYOU: As in a break?" +
+      "\nJIMMY: Yeah. A lot's been happening. I need some time to clear my head");
+    }
+    else if (choice.equals("2")) {
+      player.regularEnergy();
+      player.upKnowledge();
+      System.out.println("JIMMY ECCLESTONE: I actually came from the butler's room. He had something of mine..." +
+      "\nJimmy's face gives way that he is extremely upset.");
+
+      Scanner in6 = new Scanner(System.in);
+      System.out.println("Do you ask him if he's upset because...");
+      System.out.println("1 - The butler stole from him? (-1 energy)");
+      System.out.println("2 - The butler killed his daughter? (-1 energy)");
+      System.out.println("3 - Don't ask anything. (-0 energy)");
+      choice = in6.nextLine();
+      if (choice.equals("1") || choice.equals("2") && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy to do that!");
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        player.upKnowledge();
+        System.out.println("James didn't necessarily steal something... but he did have something of mine. I'm just annoyed since he wouldn't give it to me when I first asked for it.");
+      }
+      else if (choice.equals("2")) {
+        player.regularEnergy();
+        player.upKnowledge();
+        System.out.println("Jimmy's face hardens." +
+        "\nJIMMY ECCLESTONE: I'd rather not talk about James and Marisa.");
+      }
+      else if (choice.equals("3")) {
+
+      }
+      else {
+        wrongChoice();
+      }
+    }
+    }
+
+//Day Methods ----------------------------------------------------------------//
 
   public static void dayOne() {
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
@@ -152,26 +639,23 @@ public class Woo {
     System.out.println("3 - Take control of the situation (-0 energy)");
     player.amountEnergy();
     String choice = in.nextLine();
-    if (player.getEnergy() < 2 && (choice.equals("1") || choice.equals("2"))) {
-      System.out.println("You don't have enough energy to do that!");
-    }
-    else if (player.getEnergy() < 1 && choice.equals("3")) {
+    if (player.getEnergy() < 1 && (choice.equals("1") || choice.equals("2"))) {
       System.out.println("You don't have enough energy to do that!");
     }
     else if (choice.equals("1")) {
       System.out.println("KENNA ECCLESTONE: It's difficult caring for a 16 year old girl, let alone having to do it by myself!");
       player.Kenna();
-      player.lotEnergy();
+      player.regularEnergy();
       player.upKnowledge();
     }
     else if (choice.equals("2")) {
       System.out.println("JIMMY ECCLESTONE: You don't understand how much that woman aggravates me. I spend enough time with my daughter. My wife just has a flair for dramatics.");
       player.Jimmy();
-      player.lotEnergy();
+      player.regularEnergy();
       player.upKnowledge();
     }
     else if (choice.equals("3")) {
-      player.regularEnergy();
+
     }
     else {
       wrongChoice();
@@ -224,7 +708,7 @@ public class Woo {
       else {
         wrongChoice();
         }
-      }
+    } //end stop jimmy
     else if (choice.equals("2")) {
 
     }
@@ -258,7 +742,7 @@ public class Woo {
       player.upKnowledge();
       System.out.println("KENNA ECCLESTONE: All right, my head butler will bring you to the bathroom." +
       "\nWith a snap of Kenna's fingers, the doors are opened by a middle aged man. You assume that he is the head butler." +
-      "\nKENNA ECCLESTONE: This is Private Investigator " + player.name + ". Please escort " + player.name + "to the bathroom and then to the exit." +
+      "\nKENNA ECCLESTONE: This is Private Investigator " + player.name + ". Please escort " + player.name + " to the bathroom and then to the exit." +
       "\nThe man nods his head." +
       "\nHEAD BUTLER: Hello, PI " + player.name + ". Please, follow me." +
       "\nYou trail after the head butler after casting a look at Kenna, noticing that she seemed visibly upset while talking into the phone.");
@@ -369,7 +853,7 @@ public class Woo {
     else {
       wrongChoice();
       }
-    }
+    } // End of taking up on offer !
     else if (choice.equals("2")) {
       player.regularEnergy();
       gotoCasino();
@@ -378,235 +862,6 @@ public class Woo {
       System.out.println("You go back home for more rest.");
       player.upEnergy();
     }
-  }
-
-  public static void walkinDay2() {
-    System.out.println("\nYou walk into the cafe, which was surprisingly bustling. You scan the premise for a person wearing a green shirt with the queen of spades." +
-    "\nYou see a teenager that fits the description and walk up to them." +
-    "\nYOU: Hello... are you " + friend1 + "?" +
-    "\n" + friend1 + ": Yes. That's me. I assume you know my name via how you got my phone number. What's your name?" +
-    "\nYOU: My name is " + player.name + "." +
-    "\n" + friend1 + ": Nice to meet you." +
-    "\nYOU: Right back at you. Now, let's get started. Shall we?" +
-    "\n" + friend1 + "nods their head.");
-  }
-
-  public static void questionSet1() {
-    Scanner in3 = new Scanner(System.in);
-    System.out.println("What will you ask?");
-    System.out.println("1 - When was the last time you saw Marisa? (-1 energy)");
-    System.out.println("2 - Can you describe your relationship with Marisa more? (-1 energy)");
-    player.amountEnergy();
-    String choice = in3.nextLine();
-    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
-      System.out.println("You don't have enough energy to do that!");
-    }
-    else if (choice.equals("1")) {
-      player.regularEnergy();
-      player.upKnowledge();
-      player.clueBeach = true;
-      System.out.println(friend1 + ": Well, the last time I saw Marisa was when our friend group went to the beach. We go to the beach every weekend.");
-
-      Scanner in4 = new Scanner(System.in);
-      System.out.println("Do you ask why exactly they go to the beach every weekend?");
-      System.out.println("1 - Yes. (-1 energy)");
-      System.out.println("2 - No. (-0 energy)");
-      player.amountEnergy();
-      choice = in4.nextLine();
-      if (choice.equals("1") && player.getEnergy() < 1) {
-        System.out.println("You don't have enough energy to do that!");
-      }
-      else if (choice.equals("1")) {
-        player.regularEnergy();
-        player.upKnowledge();
-        System.out.println("Well, Marisa's parents don't really spend that much time with her. They're always busy with work or arguing with each other.");
-      }
-      else if (choice.equals("2")) {
-
-      }
-      else {
-        wrongChoice();
-      }
-    }
-    else if (choice.equals("2")) {
-      player.regularEnergy();
-      player.upKnowledge();
-      System.out.println(friend1 + ": Marisa and I have been friends for two years -- since freshman year of high school. We are really good friends. We hang out with each other everyday, and tell each other practically everything.");
-
-      Scanner in5 = new Scanner(System.in);
-      System.out.println("Do ask if they're the closest to Marisa in their friend group?");
-      System.out.println("1 - Yes. (-1 energy)");
-      System.out.println("2 - No. (-0 energy)");
-      player.amountEnergy();
-      choice = in5.nextLine();
-      if (choice.equals("1") && player.getEnergy() < 1) {
-        System.out.println("You don't have enough energy to do that!");
-      }
-      else if (choice.equals("1")) {
-        player.regularEnergy();
-        player.upKnowledge();
-        System.out.println("I wouldn't say so. We're a tight knit group since we met each other at around the same time.");
-      }
-      else if (choice.equals("2")) {
-
-      }
-      else {
-        wrongChoice();
-      }
-    }
-    else {
-      wrongChoice();
-    }
-  }
-
-  public static void questionSet2() {
-    Scanner in6 = new Scanner(System.in);
-    System.out.println("What will you ask?");
-    System.out.println("1 - How would you describe Marisa -- by that, I mean her personality? (-1 energy)");
-    System.out.println("2 - Does Marisa.. disappear.. often? (-1 energy)");
-    player.amountEnergy();
-    String choice = in6.nextLine();
-    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
-      System.out.println("You don't have enough energy to do that!");
-    }
-    else if (choice.equals("1")) {
-      player.regularEnergy();
-      player.upKnowledge();
-      System.out.println(friend1 + ": Marisa is a fun person to be around. She's quite bubbly and socialable. Though, she's touchy with the subject of her parents...");
-
-      Scanner in7 = new Scanner(System.in);
-      System.out.println("Do you ask " + friend1 + "to elaborate on how Marisa reacts to the subject of her parents?");
-      System.out.println("1 - Yes. (-1 energy)");
-      System.out.println("2 - No. (-0 energy)");
-      player.amountEnergy();
-      choice = in7.nextLine();
-      if (choice.equals("1") && player.getEnergy() < 1) {
-        System.out.println("You don't have enough energy to do that!");
-      }
-      else if (choice.equals("1")) {
-        player.regularEnergy();
-        player.upKnowledge();
-        System.out.println("We try not to bring it up, of course. But whenever someone did, she would just become stonefaced and be kinda mean. But, that's just her defense mechanism.");
-
-        System.out.println("/Let's see if you have enough knowledge points..." +
-        "\nIs what " + friend1 + "saying make sense? You think..." +
-        "\n" + player.getKnowledge() +
-        "You need 10 knowledge.");
-        if (player.getKnowledge() > 10) {
-          System.out.println("It does.");
-          player.upKnowledge();
-        }
-        else {
-          System.out.println("It doesn't.");
-        }
-      }
-      else if (choice.equals("2")) {
-
-      }
-      else {
-        wrongChoice();
-      }
-    }
-    else if (choice.equals("2")) {
-      player.regularEnergy();
-      player.upKnowledge();
-      System.out.println(friend1 + ": Actually, yes. During those times, she usually just isolates herself at her mansion. We respect her privacy.");
-
-      Scanner in8 = new Scanner(System.in);
-      System.out.println("Do you ask if " + friend1 + " contacts Marisa during those times?");
-      System.out.println("1 - Yes. (-1 energy)");
-      System.out.println("2 - No. (-0 energy)");
-      player.amountEnergy();
-      choice = in8.nextLine();
-      if (choice.equals("1") && player.getEnergy() < 1) {
-        System.out.println("You don't have enough energy to do that!");
-      }
-      else if (choice.equals("1")) {
-        System.out.println(friend1 + ": No, since she doesn't really answer any texts or calls... She completely shuts everyone out.");
-      }
-      else if (choice.equals("2")) {
-
-      }
-      else {
-        wrongChoice();
-      }
-    }
-    else {
-      wrongChoice();
-    }
-  }
-
-  public static void questionSet3() {
-    Scanner in9 = new Scanner(System.in);
-    System.out.println("What do you ask?");
-    System.out.println("1 - How long have you been aware of Marisa's disappearance? (-1 energy)");
-    System.out.println("2 - Are you concerned about Marisa's absence? (-1 energy)");
-    player.amountEnergy();
-    String choice = in9.nextLine();
-    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
-      System.out.println("You don't have enough energy to do that!");
-    }
-    else if (choice.equals("1")) {
-      player.upKnowledge();
-      System.out.println(friend1 + ": Well, Marisa usually isolates herself for a week... It's already been ten days, so I guess since three days ago.");
-    }
-    else if (choice.equals("2")) {
-      System.out.println(friend1 + ": Of course! I'm her friend... so why wouldn't I be?");
-    }
-    else {
-      wrongChoice();
-    }
-
-    Scanner in10 = new Scanner(System.in);
-    System.out.println("Do you ask if " + friend1 + "has done anything to find out about Marisa's absence?");
-    System.out.println("1 - Yes. (-1 energy)");
-    System.out.println("2 - No. (-0 energy)");
-    player.amountEnergy();
-    if (choice.equals("1") && player.getEnergy() < 1) {
-      System.out.println("You don't have enough energy to do that!");
-    }
-    else if (choice.equals("1")) {
-      player.clueMansion = true;
-      System.out.println(friend1 + ": I went over to Marisa's mansion and tried talking to her parents, but the head butler dismissed me before I had the chance to.");
-    }
-    else if (choice.equals("2")) {
-
-    }
-    else {
-      wrongChoice();
-    }
-  }
-
-  public static void kennaRant() {
-    System.out.println("\nKENNA ECCLESTONE: " + friend1 + " , you remember Jimmy, right?" +
-    "\n" + friend1 + " nods their head." +
-    "\nKENNA ECCLESTONE: Well, Jimmy has become even more insufferable.");
-
-    Scanner in14 = new Scanner(System.in);
-    System.out.println("You think...");
-    System.out.println("1 - What has he done now? (-1 energy)");
-    System.out.println("2 - He's done something wrong? (-1 energy)");
-    System.out.println("3 - ... (-0 energy)");
-    player.amountEnergy();
-    String choice = in14.nextLine();
-    if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
-      System.out.println("You don't have enough energy to do that!");
-    }
-    else if (choice.equals("1")) {
-      player.Kenna();
-    }
-    else if (choice.equals("2")) {
-      player.Jimmy();
-    }
-    else if (choice.equals("3")) {
-
-    }
-    else {
-      wrongChoice();
-    }
-
-    System.out.println("KENNA ECCLESTONE: We have our regular arguments here and there, of course. It can be about how he eats his food sloppily or come home late. But, this time -- last night -- it was something completely different.");
-
   }
 
   public static void dayTwo() {
@@ -628,15 +883,15 @@ public class Woo {
     String choice = in.nextLine();
     if (choice.equals("1")) {
       friend1.setName("KLAUS");
-      friends.remove("KLAUS");
+      friends.remove(0);
     }
     else if (choice.equals("2")) {
       friend1.setName("ADELINE");
-      friends.remove("ADELINE");
+      friends.remove(1);
     }
     else if (choice.equals("3")) {
       friend1.setName("JONAS");
-      friends.remove("JONAS");
+      friends.remove(2);
     }
     else {
       wrongChoice();
@@ -666,9 +921,23 @@ public class Woo {
       questionSet1();
       questionSet2();
       questionSet3();
-      System.out.println("Your conversation with " + friend1 + "comes to a close when you see a lady by the cashier that looks familiar." +
-      "\nYour suspicions are proven true when the lady turns around... revealing it to be Kenna." +
-      "\nKenna also notices you and makes her way over." +
+      System.out.println("Your conversation with " + friend1 + "comes to a close when you see a lady by the cashier that looks familiar.");
+
+      Scanner out = new Scanner(System.in);
+      System.out.println("Who do you think it is?");
+      System.out.println("1 - Marisa");
+      System.out.println("2 - Kenna");
+      System.out.println("3 - Head Maid");
+      choice = out.nextLine();
+      if (choice.equals("2")) {
+        player.Kenna();
+        System.out.println("Your suspicions are proven true when the lady turns around... revealing it to be Kenna.");
+      }
+      else if (choice.equals("1") || choice.equals("3")) {
+        System.out.println("The lady turns around... revealing it to be Kenna.");
+      }
+
+      System.out.println("Kenna also notices you and makes her way over." +
       "\nKENNA ECCLESTONE: Well, if it isn't " + player + " and " + friend1 + ". Lovely to see you both here." +
       "\n" + friend1 + ": Hello, Mrs. Ecclestone." +
       "\nYOU: Hello, Kenna.");
@@ -743,7 +1012,7 @@ public class Woo {
         else {
           wrongChoice();
         }
-      }
+      } // END OF QUSETIONING FRIEND1
       else if (choice.equals("2")) {
         player.regularEnergy();
         System.out.println("Kenna looks skeptical." +
@@ -769,6 +1038,7 @@ public class Woo {
         System.out.println("You don't have enough energy to do that!");
       }
       else if (choice.equals("1")) {
+        player.regularEnergy();
         player.Kenna();
         System.out.println("YOU: Kenna, is there something wrong?" +
         "\nKenna lets out a sigh of relief as if she was glad you asked her. She sits in the seat next to you.");
@@ -784,7 +1054,28 @@ public class Woo {
         wrongChoice();
       }
 
-      //write here
+      if (player.clueKennaRant == true) {
+        System.out.println("YOU: That was unexpected..." +
+        "\n" + friend2 + ": Well, for you perhaps. But, I always had an inkling that this would happen." +
+        "YOU: That what would happen?" +
+        "\n" + friend2 + ": Mrs. and Mr. Ecclestone bully eaach other. I was anticipating when they would be bored of bullying each other, and it seems like the time is now." +
+        "YOU: Interesting...");;
+      }
+      else if (player.clueWrongKenna == true) {
+        System.out.println("You have the feeling that you shouldn't have brought that up..." +
+        "YOU: Do you have an idea of what has happened?" +
+        "\n" + friend2 + ": Well, roughly. Mrs. and Mr. Ecclestone always had their disagreements. It was only a matter of time of when they would be tired of their disagreements and of each other.");
+      }
+      else {
+        System.out.println("YOU: Do you have an idea of what has happened?" +
+        "\n" + friend2 + ": Well, roughly. Mrs. and Mr. Ecclestone always had their disagreements. It was only a matter of time of when they would be tired of their disagreements and of each other.");
+      }
+
+      System.out.println("YOU: Well, I will take note of this nonetheless." +
+      "\n" + friend3 + " nods their head." +
+      "\nYOU: I'm also going to depart since there is something I have to do." +
+      "\n" + friend3 + ": Okay, bye! Oh, and do let me know if you find any new leads. I do want to be of help..." +
+      "\nYOU: I will, don't worry.");
     }
     else if (choice.equals("2")) {
       System.out.println(
@@ -797,14 +1088,123 @@ public class Woo {
       questionSet1();
       questionSet2();
       questionSet3();
+      System.out.println("Your conversation ends as " + friend3 + "departs as he has other matters to attend to." +
+      "\nYou are about to leave when you recognize a man amongst a group of men chattering and eating.");
+
+      Scanner out2 = new Scanner(System.in);
+      System.out.println("Who do you tink it is?");
+      System.out.println("1 - Jimmy");
+      System.out.println("2 - Head Butler");
+      choice = out2.nextLine();
+      if (choice.equals("1")) {
+        player.Jimmy();
+        System.out.println("Your suspicions are proven correct when you have walk a bit closer and observe it to be Jimmy.");
+      }
+      else if (choice.equals("2")) {
+        System.out.println("You walk a bit closer and observe the man to be Jimmy.");
+      }
+      else {
+        wrongChoice();
+      }
+
+      System.out.println("Jimmy and you have eye contact and a frown makes its way on Jimmy's face.");
+
+      Scanner in14 = new Scanner(System.in);
+      System.out.println("What do you do?");
+      System.out.println("1 - Greet him. (-1 energy)");
+      System.out.println("2 - Walk past his table. (-0 energy)");
+      player.amountEnergy();
+      choice = in14.nextLine();
+      if (choice.equals("1") && player.getEnergy() < 1) {
+        System.out.println("You don't have enough energy to do that!");
+      }
+      else if (choice.equals("1")) {
+        player.regularEnergy();
+        System.out.println("YOU: Hello, Jimmy." +
+        "\nThe men at the table stop chattering to look at you." +
+        "\nMAN 1: A friend of yours, Jim?" +
+        "\nJIMMY ECCLESTONE: Not so much a friend, but an acquaintence." +
+        "\nMAN 2: Who are they really, then?" +
+        "\nJIMMY ECCLESTONE: Someone hired by Kenna." +
+        "\nMAN 3: None of this Kenna talk.");
+
+        Scanner in15 = new Scanner(System.in);
+        System.out.println("Do you ask why so?");
+        System.out.println("1 - Yes. (-1 energy)");
+        System.out.println("2 - Leave the table. (-0 energy)");
+        choice = in15.nextLine();
+        player.amountEnergy();
+        if (choice.equals("1") && player.getEnergy() < 1) {
+          System.out.println("You don't have enough energy to do that!");
+        }
+        else if (choice.equals("1")) {
+          player.regularEnergy();
+          player.upKnowledge();
+          System.out.println("The men look at you in surprise." +
+          "\nMAN 1: Have you not had a conversation with her?" +
+          "\nYou are confused." +
+          "\nYOU: I have..." +
+          "\nMAN 2: Well, then. I'm sure you have only recently got to know her. She is quite charming when you do get to know her -- that's how my chap Jim here got to fall in love with her." +
+          "\nJimmy nods his head in agreement, taking a sip of coffee.");
+
+          Scanner in16 = new Scanner(System.in);
+          System.out.println("Do you ask how Kenna has changed?");
+          System.out.println("1 - Yes. (-1 energy)");
+          System.out.println("2 - No. (-0 energy)");
+          player.amountEnergy();
+          choice = in16.nextLine();
+          if (choice.equals("1") && player.getEnergy() < 1) {
+            System.out.println("You don't have enough energy to do that!");
+          }
+          else if (choice.equals("1")) {
+            player.regularEnergy();
+            System.out.println("JIMMY ECCLESTONE: Well, I suppose I fell in love with college her. She was charming, sure. But, after getting married and having lived alongside her, she's changed. I don't know if she started showing her real colors, but it was not the Kenna I fell in love with and married." +
+            "\nMAN 3: Truly a shame.");
+          }
+          else if (choice.equals("2")) {
+
+          }
+          else {
+            wrongChoice();
+          }
+
+          System.out.println("YOU: What are you doing here, Jimmy?" +
+          "\nJimmy frowns." +
+          "\nMAN 1: Well..." +
+          "\nJIMMY ECCLESTONE: I had an argument with Kenna last night. She kept meddling in my business." +
+          "\nYOU: ..." +
+          "\nJimmy's friend, noticing his change, decided to change the subject." +
+          "\nMAN 2: Well, let's head over to the ol' place, huh?" +
+          "\nJIMMY ECCLESTONE: We shall." +
+          "\nJimmy takes one last sip of the coffee and gets up. He turns to you." +
+          "\nJIMMY ECCLESTONE: See you soon, I suppose." +
+          "\nYou bid him farewell.");
+        }
+        else if (choice.equals("2")) {
+          player.Kenna();
+          System.out.println("You don't want to hear Jimmy and his friends talk badly about Kenna so you decide to leave.");
+        }
+        else {
+          wrongChoice();
+        }
+      }
+      else if (choice.equals("2")) {
+        Scanner in16 = new Scanner(System.in);
+        System.out.println("You hear a scoff from the table, but decide to keep walking.");
+      }
+      else {
+        wrongChoice();
+      }
     }
     else {
       wrongChoice();
     }
 
-    System.out.println("What do you do?");
+    Scanner in17 = new Scanner(System.in);
+    System.out.println("You leave. What do you do now?");
     System.out.println("1 - Go to the casino (-1 energy)");
     System.out.println("2 - Go home (-0 energy)");
+    choice = in17.nextLine();
 
     if (choice.equals("1") && player.getEnergy() < 1) {
       System.out.println("You don't have enough energy to do that!");
@@ -866,7 +1266,7 @@ public class Woo {
     System.out.println("YOU: " + friend2 + ", I know this is difficult, but the sooner we solve the case, the sooner it'll be over. The murderer won't just stop now that they have a taste for killing.\n" +
     friend2 + ": ... I suppose I can help. But I'm doing this to help Marisa and avenge" + friend1 + "\n" +
     friend3 + ": Are you kidding me? Whatever. I'm out of here!\n\n" +
-    friend3 + "runs off the lot while you and " + friend2 + " make your way to the garden shed\n\n" +
+    friend3 + " runs off the lot while you and " + friend2 + " make your way to the garden shed\n\n" +
     "YOU: Where did the body go?\n" +
     friend2 + ": The head butler called for someone to take it away. He was adamant about it being removed as quickly as possible.\n" +
     "YOU: That's a strange reaction. Someone dies on his watch and his first reaction is to get rid of the body?\n" +
@@ -880,7 +1280,7 @@ public class Woo {
     System.out.println("You look around the shed and notice a large arsenal of tools and supplies.");
 
     System.out.println("YOU: Did you see the body before he disposed of it? I'm sure there was some sort of evidence that would be useful right about now.\n" +
-    friend2 + ": I did, for a bit. The one thing that stood out was a bruise on " + friend1 + "'s head.\n'" +
+    friend2 + ": I did, for a bit. The one thing that stood out was a bruise on " + friend1 + "'s head.\n" +
     "YOU: Head trauma. Unfortunately for us, almost everything in this shed could've been used to inflict head trauma. Doesn't narrow it down much.\n" +
     friend2 + " looks around as well. A golf club catches their eye.\n" +
     friend2 + ": A golf club. Marisa's dad is a huge fan of golfing. I wonder how he's handling all of this. It must be hard, especially with Kenna around.");
@@ -1001,14 +1401,17 @@ public class Woo {
             System.out.println("You don't have enough energy to do that!");
           }
           else if (choice.equals("1")) {
+            player.regularEnergy();
             System.out.println("HEAD MAID: The head butler was supposed to inspect the kitchen last night. He's usually diligent with his tasks, but the cooking crew reported that he arrived an hour late, seemingly out of breath.");
             System.out.println("YOU: Hmm... interesting.");
           }
           else if (choice.equals("2")) {
+            player.regularEnergy();
             System.out.println("HEAD MAID: Kenna told maid Clarke that she was having a headache and spent the night in her bedroom. She refused any medicine.");
             System.out.println("YOU: Hmm... interesting.");
           }
           else if (choice.equals("3")) {
+            player.regularEnergy();
             System.out.println("HEAD MAID: Jimmy didn't return home from the casino last night. He said he needed to 'let loose'.");
             System.out.println("YOU: Hmm... interesting.");
           }
@@ -1029,34 +1432,34 @@ public class Woo {
           friend2 + ": I could've told you that. Sharon would never hurt anyone.\n" +
           "YOU: Well, it is quite dark outside. We should part ways. I'll see you tomorrow.\n" +
           friend2 + ": Alright. Stay safe.\n");
-
-          System.out.println("You and " + friend2 + " part ways. What do you want to do now?");
-
-          System.out.println("1 - Go to the casino (-1 energy)");
-          System.out.println("2 - Go home (-0 energy)");
-
-          if (choice.equals("1") && player.getEnergy() < 1) {
-            System.out.println("You don't have enough energy to do that!");
-          }
-          else if (choice.equals("1")) {
-            player.regularEnergy();
-            gotoCasino();
-          }
-          else if (choice.equals("2")) {
-            player.upEnergy();
-          }
-          else {
-            wrongChoice();
-          }
         }
 
 
       }
     }
+    System.out.println("You and " + friend2 + " part ways. What do you want to do now?");
+
+    Scanner in6 = new Scanner(System.in);
+    System.out.println("1 - Go to the casino (-1 energy)");
+    System.out.println("2 - Go home (-0 energy)");
+
+
+    if (choice.equals("1") && player.getEnergy() < 1) {
+      System.out.println("You don't have enough energy to do that!");
+    }
+    else if (choice.equals("1")) {
+      player.regularEnergy();
+      gotoCasino();
+    }
+    else if (choice.equals("2")) {
+      player.upEnergy();
+    }
+    else {
+      wrongChoice();
+    }
   }
 
   public static void dayFour() {
-    player.dayEnergy();
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     + "\nDay 4");
     player.dayEnergy();
@@ -1125,7 +1528,7 @@ public class Woo {
         break;
       }
       else {
-        System.out.println("Np... where are you really going?");
+        System.out.println("No... where are you really going?");
       }
     }
 
@@ -1233,9 +1636,20 @@ public class Woo {
     System.out.println(friend3 + " and you are easily let in the mansion, but the problem is that the butler's room is locked." +
     "\n" + friend3 + ": ...How are we going to go in?");
 
-    //write here//
+    while (true) {
+      Scanner in0 = new Scanner(System.in);
+      System.out.println("You see something on the floor that could be of help.");
+      System.out.println("What is it? (1 word)");
+      choice = in0.nextLine();
+      if (choice.equals("hairpin") || choice.equals("pin") || choice.equals("paperclip")) {
+        break;
+      }
+      else {
+        System.out.println("No... what do you really see?");
+      }
+    }
 
-    System.out.println("You notice a hairpin on the floor." +
+    System.out.println("You pick it off the floor." +
     "\nYOU: Don't worry, " + friend3 + ". I have experience with lock picking.");
 
     System.out.println(
@@ -1254,7 +1668,7 @@ public class Woo {
 
     while (true) {
       Scanner in4 = new Scanner(System.in);
-      System.out.println("Open the door (3 words)");
+      System.out.println("Open the door. (3 words)");
       choice = in4.nextLine();
       choice = choice.toLowerCase();
       if (choice.equals("open the door")) {
@@ -1381,7 +1795,6 @@ public class Woo {
 }
 
   public static void dayFive() {
-    player.dayEnergy();
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     + "\nDay 5");
     player.dayEnergy();
@@ -1418,7 +1831,7 @@ public class Woo {
 
     Scanner in2 = new Scanner(System.in);
     System.out.println("What do you do?");
-    System.out.println("1 - Stay in bed a while longer. (-1 energy)");
+    System.out.println("1 - Stay in bed a while longer. (-0 energy)");
     System.out.println("2 - Get up and about. (-1 energy)");
     player.amountEnergy();
     choice = in2.nextLine();
@@ -1426,10 +1839,9 @@ public class Woo {
       System.out.println("You don't have enough energy to do that!");
     }
     else if (choice.equals("1")) {
-      player.regularEnergy();
       System.out.println("You eventually motivate yourself to get up." +
       "\nYou bathe, brush your teeth, get dressed in clothes that you suppose the head maid left for you, and leave your room." +
-      "\nYou head down the stairs, following the aromatic smell.");
+      "\nYou head down the stairs, following the aromatic smell."); //move on
     }
     else if (choice.equals("2")) {
       player.regularEnergy();
@@ -1441,8 +1853,7 @@ public class Woo {
       System.out.println("You haven't seen him in a long time, and Jimmy looks tense. What do you say?");
       Scanner in3 = new Scanner(System.in);
       System.out.println("1 - Greet him. (-2 energy)");
-      System.out.println("2 - Insult him. (-2 energy)");
-      System.out.println("3 - Ignore him. (-0 energy)");
+      System.out.println("2 - Ignore him. (-0 energy)");
       player.amountEnergy();
       choice = in3.nextLine();
       if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 2) {
@@ -1451,8 +1862,8 @@ public class Woo {
       else if (choice.equals("1")) {
         player.lotEnergy();
         player.Jimmy();
-        if (player.getJimmy() > 10) {
-          System.out.println("Jimmy, upon seeing you, noticeably loosens up." +
+        if (player.getJimmy() >= 9) { //player's relationship with Jimmy is greater than 9
+          System.out.println("Jimmy, upon seeing you, loosens up." +
           "\nJIMMY ECCLESTONE: Oh, hey, " + player.name + " . It's been a while. How are you doing?" +
           "\nYOU: Well... it hasn't been my best week, but I'm hanging on." +
           "\nYou notice that Jimmy looks a bit ragged as he has prominent eyebags.");
@@ -1469,95 +1880,39 @@ public class Woo {
           else if (choice.equals("1")) {
             player.regularEnergy();
             player.Jimmy();
-            System.out.println("JIMMY ECCLESTONE: Thanks for asking, " + player.name + " . I have actually been doing pretty fine since I always have a Corona in my hand." +
+            System.out.println("JIMMY ECCLESTONE: Thanks for asking, " + player + " . I have actually been doing pretty fine since I always have a Corona in my hand." +
             "\nHe lets out a chuckle." +
             "\nYou let out a chuckle in pity.");
+            questionJimmy();
 
-            Scanner in5 = new Scanner(System.in);
-            System.out.println("What do you ask him?");
-            System.out.println("1 - Where are you heading to? (-1 energy)");
-            System.out.println("2 - Where did you come from? (-1 energy)");
-            System.out.println("3 - I have no questions. I don't want to talk to him anymore.");
-            choice = in5.nextLine();
-            if ((choice.equals("1") || choice.equals("2")) && player.getEnergy() < 1) {
-              System.out.println("You don't have enough energy to do that!");
-            }
-            else if (choice.equals("1")) {
-              player.upKnowledge();
-              System.out.println("JIMMY ECCLESTONE: I'm actually going to play golf with some old friends." +
-              "\nYOU: That's cool... where?" +
-              "\nJIMMY ECCLESTONE: In New York, actually. I'm going to spend some time there... I don't know when I'm coming back.");
+            System.out.println("JIMMY ECCLESTONE: Well, I will make my way then." +
+            "\nYou offer your hand and Jimmy shakes it." +
+            "\nThen, you part ways." +
+            "\nYou head down the stairs, following the aromatic smell."); //move on
+          } //yes to ask how he's been AND relationship better than 9
+          else if (choice.equals("2")) { //ignore
+              questionJimmy();
 
-              Scanner in6 = new Scanner(System.in);
-              System.out.println("Do you find it suspicious?");
-              System.out.println("1 - Yes.");
-              System.out.println("2 - No.");
-              choice = in6.nextLine();
-              if (choice.equals("1")) {
-                player.Jimmy();
-              }
-              else if (choice.equals("2")) {
-
-              }
-              else {
-                wrongChoice();
-              }
-            }
-            else if (choice.equals("2")) {
-              player.upKnowledge();
-              System.out.println("JIMMY ECCLESTONE: I actually came from the butler's room. He had something of mine..." +
-              "\nJimmy's face gives way that he is extremely upset.");
-
-              Scanner in7 = new Scanner(System.in);
-              System.out.println("Do you ask him if he's upset because...");
-              System.out.println("1 - The butler stole from him? (-1 energy)");
-              System.out.println("2 - The butler killed his daughter? (-1 energy)");
-              System.out.println("3 - The butler betrayed him? (-1 energy)");
-              System.out.println("4 - Don't ask anything. (-0 energy)");
-              choice = in7.nextLine();
-              if ((choice.equals("1") || choice.equals("2") || choice.equals("3")) && player.getEnergy() < 1) {
-                System.out.println("You don't have enough energy to do that!");
-              }
-              else if (choice.equals("1")) {
-
-              }
-              else if (choice.equals("2")) {
-
-              }
-              else if (choice.equals("3")) {
-
-              }
-              else if (choice.equals("4")) {
-
-              }
-            }
-            else if (choice.equals("3")) {
-              System.out.println("JIMMY ECCLESTONE: ...");
-            }
-            else {
-              wrongChoice();
-            }
-          }
-          else if (choice.equals("2")) {
-
+              System.out.println("JIMMY ECCLESTONE: Well, I will make my way then." +
+              "\nYou offer your hand and Jimmy shakes it." +
+              "\nThen, you part ways." +
+              "\nYou head down the stairs, following the aromatic smell."); //move on
           }
           else {
             wrongChoice();
           }
         }
-      }
+        System.out.println("You nod your head as a sign of acknowledgement as you walk by him." +
+        "\nHe nods back to you." +
+        "\nYou pass by him and head down the stairs, following the aromatic smell."); //move on
+      } // end of greet him
       else if (choice.equals("2")) {
-        player.lotEnergy();
-        System.out.println("");
-      }
-      else if (choice.equals("3")) {
-
+        System.out.println("You walk past him, earning a scoff from his direction." +
+        "\nYou head down the stairs, following the aromatic smell."); //move on
       }
       else {
         wrongChoice();
       }
-
-      System.out.println("");
     }
     else {
       wrongChoice();
@@ -1575,16 +1930,35 @@ public class Woo {
       }
     }
 
-    System.out.println("__" +
+    System.out.println(
+      "__" +
     "\n  |__" +
     "\n     |__" +
     "\n        |__" +
     "\n           |__" +
     "\n              |");
 
+    System.out.println("\nYou head down to the kitchen and see the head maid." +
+    "\nYOU: Good morning. Crazy, huh?" +
+    "\nHEAD MAID: G'morning! What's crazy?" +
+    "\nYOU: Did you hear? The head butler got arrested yesterday. It's crazy because " + friend3 + " and I thought he was innocent." +
+    "\nHEAD MAID: Wait, what? Why would you think James is innocent?" +
+    "\nYOU: We went over to his apartment in New York and it turns out that he left because he was being threatened by the murderer. There was even a note." +
+    "\nHEAD MAID: Oh no." +
+    "\nYou notice the head maid has an unsure look on her face." +
+    "\nYOU: ...What happened?" +
+    "\nHEAD MAID: I didn't know... I was actually the one that turned him in. I was cleaning the hallways and found Marisa's bracelet in his briefcase." +
+    "\nAnd, well, Marisa never takes off that bracelet. It means something to her. I figured that the only way he'd have it is if he was the one who had something to do with her disappearance.." +
+    "\nYOU: Hmmm... It'd be easy for the actual murderer to plant a bracelet like that." +
+    "\nHEAD MAID: I suppose..." +
+    "\nYOU: It's okay. We can work with this. Next time, let me know when you find clues. The Ecclestone's did hire me to investigate, after all." +
+    "\nHEAD MAID: I will. God's speed with you.");
+
+    System.out.println("\nYou finish up breakfast and wake up " + friend3 + " to go solve the rest of the case.");
+
     while (true) {
       Scanner chooseJail = new Scanner (System.in);
-      System.out.println("Where are you going? (1 word)");
+      System.out.println("Where are you going to go? (1 word)");
       choice = chooseJail.nextLine();
       choice = choice.toLowerCase();
       if (choice.equals("jail")) {
@@ -1602,9 +1976,9 @@ public class Woo {
     "\n--------------------------------------------------------------------------------");
 
     System.out.println("You and " + friend3 + " arrive at the jail. You provide your IDs to the guard, who lets you in to talk to the butler." +
-    "\nYOU: Hey, I spoke to the head maid this morning. Apparently, she found out that you had Marisa's bracelet and called the police." +
+    "\nYOU: I spoke to the head maid this morning... Apparently, she found out that you had Marisa's bracelet and called the police." +
     "\n" + friend3 + ": It should be fine though. The bracelet was definitely planted by the real murderer. " +
-    "\nHEAD BUTLER: I killed her." +
+    "\nHEAD BUTLER: ...I killed her." +
     "\nYOU: Our next course of act-- Wait what?" +
     "\nHEAD BUTLER: You've only been here for the week, but you don't know what the regular day at the Ecclestone mansion is like." +
     "\n" + friend3 + ": James, this isn't funny." +
@@ -1612,31 +1986,50 @@ public class Woo {
     "\nYOU: But... You've always had a good relationship with them." +
     "\nHEAD BUTLER: Did you hear? About Sharon's mother? And the cancer? Did you know that she has to work extra hours doing delivery because the Ecclestones don't pay her enough to afford the medicine?" +
     "\n" + friend3 + ": What are you saying? Why are you doing this?" +
-    "\nHEAD BUTLER: The Ecclestones have always taken advantage of good people. People like Sharon. I just wanted a bit of revenge." +
+    "\nHEAD BUTLER: Sharon has been working in the mansion for two decades... you would think that the Ecclestone's would raise her salary or something. But, they didn't. Rather, when I advised Sharon to get a better job, she said that she couldn't. They must have something over her." +
+    "\nWhat you need to understand is that the Ecclestone's take advantage of good people. People like Sharon. I just wanted a bit of revenge." +
     "\n" + friend3 + ": But... You've always liked Marisa." +
-    "\nHEAD BUTLER: Didn't mean to kill her. It was unfortunate. I was thinking of giving her back for money, too. She's a strong one though." +
+    "\nHEAD BUTLER: I didn't mean to kill her. It was unfortunate -- I was thinking of holding her for ransom. I tried holding her down, but she's a strong one. Though, one knock to the head, and she was out." +
     "\n" + friend3 + ": What about... What about " + friend1 + "? And " + friend2 + "?" +
-    "\nHEAD BUTLER: Knew too much. Shouldn't have gotten involved with the case. I'm surprised you're still here. If I hadn't gotten arrested, I would've killed you, too." +
-    "\nYOU: This doesn't make any sense..." +
-    "\nHEAD BUTLER: It's all over now anyway. There was no way I'd get away with it." +
-    "\n" + friend3 + ": Wait... So you were the one to kill " + friend2 + "?" +
-    "\nHEAD BUTLER: Hah... That little kid sure can put up a fight. Almost took me down. Would've hid the pieces of their body better if Kenna wasn't at the beach.");
+    "\nHEAD BUTLER: They knew too much... they shouldn't have gotten involved with the case. Though..." +
+    "\nThe head butler looks at you and says the next few words with menace." +
+    "\nHEAD BUTLER: I suppose you're to blame, though. The deaths of " + friend1 + " and " + friend2 + " . I didn't enjoy getting rid of them, but I had to since you wanted to convince them to help. Look where their help got them!" +
+    "\nYou feel disgust towards the head butler." +
+    "\nI'm surprised you're still here. If I hadn't gotten arrested, I would've killed you, too.");
 
-    System.out.println("\nYou pull " + friend3 + " out of their chair and leave the room. You get back into the car and lean your head against the seat." +
+    Scanner jailtalk = new Scanner(System.in);
+    System.out.println("Your anger is at its peak. What do you do?");
+    System.out.println("1 - Curse him.");
+    System.out.println("2 - Hold back your anger.");
+    player.amountEnergy();
+    choice = jailtalk.nextLine();
+    if (choice.equals("1")) {
+      System.out.println("YOU: I hope you rot in Hell for your crimes." +
+      "The head butler just lets out a chuckle.");
+    }
+    else {
+
+    }
+
+    System.out.println(friend3 + ": This doesn't make any sense..." +
+    "\nHEAD BUTLER: It's all over now, anyway." +
+    "\n" + friend3 + ": Wait... So you were the one to kill " + friend2 + "?" +
+    "\nHEAD BUTLER: Hah... That kid put up a fight -- almost took me down too. So, I guess I enjoyed beating them up. Though, I would've hid the body better if Kenna wasn't at the beach.");
+
+    System.out.println("\nYou heard enough. You pull " + friend3 + " out of their chair and leave the room. You get back into the car and lean your head against the wheel." +
     "\n" + friend3 + ": What... was that? There's no way, right? There's no way." +
     "\nYOU: How did he know? How did he know about " + friend3 + "? He didn't pick up when Kenna called and he hasn't BEEN here." +
-    "\n" + friend3 + ": I've never seen him that cold before. He never liked us, but he was always warm to Marisa. I don't understand.");
-
-    System.out.println("\nThis decision is an important one. It's time. Do you think the Head Butler is the culprit?");
-    System.out.println("1 - Yes.");
-    System.out.println("2 - No.");
+    "\n" + friend3 + ": Doesn't that mean that he killed " + friend3 + " then? He never liked us... I don't understand, I don't understand.");
 
     Scanner believeButler = new Scanner (System.in);
 
     while (true) {
+      System.out.println("\nThis decision is an important one. It's time. Do you think the Head Butler is the culprit?");
+      System.out.println("1 - Yes.");
+      System.out.println("2 - No.");
       choice = believeButler.nextLine();
       if (!(choice.equals("1") || choice.equals("2"))) {
-        System.out.println("You have to choose 1 or 2.");
+        System.out.println("Do you believe him or not?");
       }
       else {
         break;
@@ -1644,16 +2037,17 @@ public class Woo {
     }
 
     if (choice.equals("1")) {
-      System.out.println("YOU: All of the evidence has been pointing to him. And he just gave us his confession. There's no other explanation." +
+      System.out.println("YOU: He, himself, confessed. There's no other explanation." +
       "\n" + friend3 + ": I... I suppose." +
-      "\nYOU: I'll drop you off at your house. And let the Ecclestones know. The case is closed." +
+      "\nYOU: I'll drop you off at your house and alert the Ecclestone's. The case is closed." +
       "\n" + friend3 + ": Is this really the end?" +
-      "\nYOU: I guess so.");
+      "\nYOU: ...Yes.");
 
-      System.out.println("\nThat night, you receive a check from Kenna and Jimmy for $4000." +
+      System.out.println("\nThat night, you receive a check from Kenna and Jimmy for $40,000." +
       "\nThe following day, you leave the mansion. You hear about the case on the news." +
-      "\nYou tried to appear confident when you were speaking to " + friend3 + ", but a gnawing feeling of doubt filled your gut as you realized" +
+      "\nYou tried to appear confident when you were speaking to " + friend3 + ", but a gnawing feeling of doubt filled your gut as you realize..." +
       "\n\t\t\t\t\t\t\t\tYou got the wrong guy.");
+      System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GAME OVER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     }
     else {
       System.out.println("YOU: There's no way it's true. He wouldn't have had that note in anticipation that we'd show up to the apartment." +
@@ -1664,45 +2058,141 @@ public class Woo {
       "\n" + friend3 + ": What if we bail him out? We need 200 dollars, though." +
       "\nYOU: Let me check...");
 
+      while (true) {
+        System.out.println("Check your wallet (2 words)");
+        Scanner checkWallet = new Scanner(System.in);
+        choice = in.nextLine();
+        choice = choice.toLowerCase();
+        if (choice.equals("check wallet")) {
+          break;
+        }
+        else {
+          System.out.println("No... Try again");
+        }
+      }
+
       if (player.getMoney() > 200) {
         System.out.println("\nYOU: Aha! I have enough money. All that time spent at the casino paid off!" +
-        "\n" + friend3 + ": You've been at the casino?" +
-        "\nYOU: Let's go bail out the butler!");
+        "\n" + friend3 + ": ...You've been at the casino?" +
+        "\nYOU: No talk of that...Let's go bail out the butler!");
 
         System.out.println("\nThe two of you return to the jail and pay the bail money. You drag the butler back to the car." +
-        "\nYOU: Alright. I need you to be honest with us now. You're already out, so there's no going back. What do you know?" +
-        "\nHEAD BUTLER: I'm so, so sorry. I--" +
+        "\nYOU: All right. I need you to be honest with us now. You're already out, so there's no going back. What do you know?" +
+        "\nHEAD BUTLER: ...I'm so, so sorry. I--" +
         "\nYOU: Stop apologizing and tell us the truth." +
-        "\nHEAD BUTLER: Kenna. She visited me earlier this morning. Showed me a picture of my wife and kids outside our house. Told me that she'd kill them if I didn't take the fall." +
-        "\n" + friend3 + ": Oh no... What do we do now? ");
+        "\nHEAD BUTLER: Kenna. She visited me earlier this morning. She told me that she would kill my wife and kids if I didn't take the fall." +
+        "\n" + friend3 + ": ...What should we do now?" +
+        "\nYOU: We tell the police. They have more manpower than us." +
+        "\n" + friend3 + ": We don't have physical evidence like Sharon did, though." +
+        "\nYOU: I'm friends with the Police Commissioner. Leave it to me." +
+
+        "\nShortly afterwards, Kenna Ecclestone is caught running in the forest and is apprehended." +
+        "\nA few months later, she's convicted of the kidnapping of Marisa Ecclestone and the murders of " + friend1 + " and " + friend2 + "." +
+        "\nAccording to the news, Kenna originally planned on kidnapping and keeping Marisa in a hidden location for 2 weeks." +
+        "\nIn those 2 weeks, she was going to hire a private investigator as a witness to her husband's, Jimmy's, incompetance." +
+        "\nThis would later be used to file for divorce, ensure Jimmy loses all custody rights, and potentially win the Ecclestone mansion." +
+        "\nHowever, this went south as Marisa was accidentally killed in transport." +
+        "\n\nAnyways, good job PI " + player.name + ". Hope you see you back soon.");
+      }
+      else {
+        System.out.println("\nYOU: I don't have enough money." +
+        "\n" + friend3 + ": What do we do now?" +
+        "\nYOU: We can either wait for them to let him go since there's a lack of evidence, or try to figure it ourselves right now." +
+        "\nYOU: I'm friends with the Police Commissioner, so she'll arrest whoever we decide on." +
+        "\n" + friend3 + ": I have no clue. What do you want to do?");
+
+        Scanner arrestOr = new Scanner (System.in);
+
+        while (true) {
+          System.out.println("1 - Choose to arrest either Kenna or Jimmy");
+          System.out.println("2 - Go back to the mansion and think about it");
+          choice = arrestOr.nextLine();
+          if (!(choice.equals("1") || choice.equals("2"))) {
+            break;
+          }
+          else {
+            System.out.println("Choose either 1 or 2.");
+          }
+
+        }
+
+        if (choice.equals("1")) {
+
+          if (player.getKenna() > player.getJimmy()) {
+            System.out.println("YOU: I personally have a better relationship with Kenna.");
+            System.out.println(friend3 + ": Alright. Let's arrest Jimmy then.");
+            System.out.println("Shortly after, Jimmy Ecclestone is arrested before boarding a flight to New York. You watch, on the news, how Jimmy struggles against the officers while handcuffed.");
+            System.out.println("That night, you receive a check from Kenna and for $40,000." +
+            "\nThe following day, you leave the mansion. You hear about the case on the news." +
+            "\nYou tried to appear confident when you were speaking to " + friend3 + ", but a gnawing feeling of doubt filled your gut as you realize..." +
+            "\n\t\t\t\t\t\t\t\tYou got the wrong guy.");
+            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GAME OVER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+          }
+          else if (player.getJimmy() > player.getKenna()) {
+            System.out.println("YOU: I personally have a better relationship with Jimmy.");
+            System.out.println("\n" + friend3 + ": Alright. Let's arrest Kenna then.");
+            System.out.println("\n\nShortly afterwards, Kenna Ecclestone is caught running in the forest and is apprehended." +
+            "\nA few months later, she's convicted of the kidnapping of Marisa Ecclestone and the murders of " + friend1 + " and " + friend2 + "." +
+            "\nAccording to the news, Kenna originally planned on kidnapping and keeping Marisa in a hidden location for 2 weeks." +
+            "\nIn those 2 weeks, she was going to hire a private investigator as a witness to her husband's, Jimmy's, incompetance." +
+            "\nThis would later be used to file for divorce, ensure Jimmy loses all custody rights, and potentially win the Ecclestone mansion." +
+            "\nHowever, this went south as Marisa was accidentally killed in transport." +
+            "\nAnyways, good job PI " + player.name + ". Hope you see you back soon.");
+          }
+          else {
+            System.out.println("\nYOU: Hmm... My relationship with Jimmy and Kenna are equal. Who should I choose?");
+            System.out.println(friend3 + ": Let's just go back to the mansion and think about it.");
+
+            System.out.println("\nThe two of you head back to the mansion and spend the rest of the day reworking the evidence.");
+            daySix();
+
+          }
+        } //end arrest option
+        else { //choice.equals("2")
+          System.out.println("\nThe two of you head back to the mansion and spend the rest of the day reworking the evidence.");
+          daySix();
+        }
+      } //don't have enough money for bail statement
+    } //don't believe that the butler is culprit statement
+  }
+
+  public static void daySix() {
+    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    + "\nDay 6");
+
+    System.out.println("You wake up at the mansion again. You get up bright and early and notice yourself feeling thirsty." +
+    "\nYou reach over to your bedside table and drink from a glass of room temperature water." +
+    "\nYou feel dizzy, so you lay back down onto the bed and fall asleep," +
+    "\n\nBut, you never wake up.");
+    System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<GAME OVER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+  }
+
+//Main Method ----------------------------------------------------------------//
+
+  public static void main(String[] args) {
+    boolean continuePlay = true;
+    playGame();
+    while (continuePlay) {
+      System.out.println("Do you wish to play again?");
+      System.out.println("1 - Yes!");
+      System.out.println("2 - No...");
+
+      Scanner in = new Scanner(System.in);
+      String choice = in.nextLine();
+
+      if (choice.equals("1")) {
+        System.out.println("Starting new game now...");
+        playGame();
+      }
+      else if (choice.equals("2")) {
+        System.out.println("Quitting game...");
+        continuePlay = false;
+      }
+      else {
+        System.out.println("That's not an option. Automatically quitting game...");
+        continuePlay = false;
       }
     }
   }
-
-  public static void main(String[] args) {
-    playAgainstJojo();
-    // boolean continuePlay = true;
-    // while (continuePlay) {
-    //   playGame();
-    //   System.out.println("Do you wish to try again?");
-    //   System.out.println("1 - Yes!");
-    //   System.out.println("2 - No...");
-    //
-    //   Scanner in = new Scanner(System.in);
-    //   String choice = in.nextLine();
-    //
-    //   if (choice.equals("1")) {
-    //     System.out.println("Starting new game now...");
-    //   }
-    //   else if (choice.equals("2")) {
-    //     System.out.println("Quitting game...");
-    //     continuePlay = false;
-    //   }
-    //   else {
-    //     System.out.println("That's not an option. Automatically quitting game...");
-    //     continuePlay = false;
-    //   }
-    // }
-  }
-
 }

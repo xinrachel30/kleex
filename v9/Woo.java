@@ -141,6 +141,9 @@ public class Woo {
     System.out.println("You paid JOJO 10 dollars.");
     player.payForGame();
 
+    player.blackJackValue = 0;
+    JOJO.blackJackValue = 0;
+
     System.out.println("JOJO: Heya! This is BlackJack. Rules goes: Aces are 1s and jokers/queens/kings are 10s." +
     "\nJOJO: The goal is to get as close to 21 as possible without going over. Of course, you're up against me.");
 
@@ -880,15 +883,15 @@ public class Woo {
     String choice = in.nextLine();
     if (choice.equals("1")) {
       friend1.setName("KLAUS");
-      friends.remove("KLAUS");
+      friends.remove(0);
     }
     else if (choice.equals("2")) {
       friend1.setName("ADELINE");
-      friends.remove("ADELINE");
+      friends.remove(1);
     }
     else if (choice.equals("3")) {
       friend1.setName("JONAS");
-      friends.remove("JONAS");
+      friends.remove(2);
     }
     else {
       wrongChoice();
@@ -1129,6 +1132,7 @@ public class Woo {
         System.out.println("Do you ask why so?");
         System.out.println("1 - Yes. (-1 energy)");
         System.out.println("2 - Leave the table. (-0 energy)");
+        choice = in15.nextLine();
         player.amountEnergy();
         if (choice.equals("1") && player.getEnergy() < 1) {
           System.out.println("You don't have enough energy to do that!");
@@ -1147,6 +1151,7 @@ public class Woo {
           System.out.println("Do you ask how Kenna has changed?");
           System.out.println("1 - Yes. (-1 energy)");
           System.out.println("2 - No. (-0 energy)");
+          player.amountEnergy();
           choice = in16.nextLine();
           if (choice.equals("1") && player.getEnergy() < 1) {
             System.out.println("You don't have enough energy to do that!");
@@ -1195,9 +1200,11 @@ public class Woo {
       wrongChoice();
     }
 
+    Scanner in17 = new Scanner(System.in);
     System.out.println("You leave. What do you do now?");
     System.out.println("1 - Go to the casino (-1 energy)");
     System.out.println("2 - Go home (-0 energy)");
+    choice = in17.nextLine();
 
     if (choice.equals("1") && player.getEnergy() < 1) {
       System.out.println("You don't have enough energy to do that!");
@@ -1259,7 +1266,7 @@ public class Woo {
     System.out.println("YOU: " + friend2 + ", I know this is difficult, but the sooner we solve the case, the sooner it'll be over. The murderer won't just stop now that they have a taste for killing.\n" +
     friend2 + ": ... I suppose I can help. But I'm doing this to help Marisa and avenge" + friend1 + "\n" +
     friend3 + ": Are you kidding me? Whatever. I'm out of here!\n\n" +
-    friend3 + "runs off the lot while you and " + friend2 + " make your way to the garden shed\n\n" +
+    friend3 + " runs off the lot while you and " + friend2 + " make your way to the garden shed\n\n" +
     "YOU: Where did the body go?\n" +
     friend2 + ": The head butler called for someone to take it away. He was adamant about it being removed as quickly as possible.\n" +
     "YOU: That's a strange reaction. Someone dies on his watch and his first reaction is to get rid of the body?\n" +
@@ -1273,7 +1280,7 @@ public class Woo {
     System.out.println("You look around the shed and notice a large arsenal of tools and supplies.");
 
     System.out.println("YOU: Did you see the body before he disposed of it? I'm sure there was some sort of evidence that would be useful right about now.\n" +
-    friend2 + ": I did, for a bit. The one thing that stood out was a bruise on " + friend1 + "'s head.\n'" +
+    friend2 + ": I did, for a bit. The one thing that stood out was a bruise on " + friend1 + "'s head.\n" +
     "YOU: Head trauma. Unfortunately for us, almost everything in this shed could've been used to inflict head trauma. Doesn't narrow it down much.\n" +
     friend2 + " looks around as well. A golf club catches their eye.\n" +
     friend2 + ": A golf club. Marisa's dad is a huge fan of golfing. I wonder how he's handling all of this. It must be hard, especially with Kenna around.");
@@ -1432,8 +1439,10 @@ public class Woo {
     }
     System.out.println("You and " + friend2 + " part ways. What do you want to do now?");
 
+    Scanner in6 = new Scanner(System.in);
     System.out.println("1 - Go to the casino (-1 energy)");
     System.out.println("2 - Go home (-0 energy)");
+
 
     if (choice.equals("1") && player.getEnergy() < 1) {
       System.out.println("You don't have enough energy to do that!");
@@ -1451,7 +1460,6 @@ public class Woo {
   }
 
   public static void dayFour() {
-    player.dayEnergy();
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     + "\nDay 4");
     player.dayEnergy();
@@ -1787,7 +1795,6 @@ public class Woo {
 }
 
   public static void dayFive() {
-    player.dayEnergy();
     System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     + "\nDay 5");
     player.dayEnergy();
