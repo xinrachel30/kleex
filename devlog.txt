@@ -18,7 +18,7 @@ player to choose a valid option
 --> we then thought of a while loop where the condition is true -- thus repeat itself --
     and that to exit the loop, one would have to choose a valid option (since there would
     be a break;)
-    --> we used this on day 5 to force the player to choose if they believe the butler,
+    --> we used this on later days, especially day 5, to force the player to choose if they believe the butler,
         but decided to keep earlier days the same. More generally, the more important decisions
         got while loops.
 
@@ -126,6 +126,6 @@ Lindsay :: Finished day 4 dialogue (Worked on the call with Kenna), worked on da
 
 2021-01-23
 --------------------------------------------------------------
-Lindsay :: Finished day 2 dialogue, Worked on finishing day 5 dialogue (meeting Jimmy in the hallway + questioning), Solved compile-errors in Woo.java, Did the flowchart for day 4, Added many visuals to make the reading less boring (door, stairs, gun)
+Lindsay :: Finished day 2 dialogue, Worked on finishing day 5 dialogue (meeting Jimmy in the hallway + questioning), Solved compile-errors in Woo.java, Did the flowchart for day 4, Added many visuals to make the reading less boring (door, stairs, gun, bed, money), Added more times where player input is needed 
 Xinqing :: Worked on finishing day 5 dialogue (including the different endings), Added day 6 dialogue, Added comments for some ending brackets, Finished BlackGame game and corresponding dialogue, added BlackJack vars and methods to Character.java, did the flowchart for days 3 and 5
 ==============================================================
