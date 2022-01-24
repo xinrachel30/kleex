@@ -5,7 +5,7 @@ Clyde Sinclair
 
 pd 7
 ---------------------
-The Unraveling
+The Unraveling 
 
 /////////// Zone of Reflection \\\\\\\\\\\
 ------------------------------------------
@@ -13,39 +13,51 @@ OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 in the beginning, we were stumped since we couldn't think of a way to force the
 player to choose a valid option
---> we initially decided to force a GAME OVER (wrongChoice())if the player were to choose an invalid
+--> we initially decided to force a GAME OVER (wrongChoice()) if the player were to choose an invalid
     option as a way to ensure the player would follow the instructions
 --> we then thought of a while loop where the condition is true -- thus repeat itself --
     and that to exit the loop, one would have to choose a valid option (since there would
     be a break;)
     --> we used this on day 5 to force the player to choose if they believe the butler,
-        but decided to keep earlier days the same.
+        but decided to keep earlier days the same. More generally, the more important decisions
+        got while loops.
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+- In the BlackJack minigame, after 2 cards are dealt to both the player and Jojo,
+  how can we get the player and Jojo to each take one card at a time?
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 to exit out of the program, signifying the end of the game, we learned of System.exit(0)
-- this is not to be confused with break(), which only exits out of a loop
+- this is not to be confused with break(), which only exits out of a loop, or return;, which exits out
+  of a method.
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - we changed 7 days to 5 days because 7 days was overly ambitious
-- we chose to add visuals in days 4-5 since the dialogue was getting heavy and we
+- we chose to add text visuals in days 4-5 since the dialogue was getting heavy and we
   didn't want the player to get bored midst reading blocks of text
 - we were originally just going to have a knowledge instance variable for
-  PrivateInvestigator.java, but added instance variables like clueCafe and clueCoffee
+  PrivateInvestigator.java, but later also added instance variables like clueCafe and clueCoffee
   so that we can make specific dialogue based on details that the player knows.
+- initially, we also had a Murderer.java and Staff.java. We thought that we might include
+  an option where the player directly confronts a murderer or staff member, but decided
+  against it because it wasn't necessary for our plot.
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Before doing this project, we could have spent more time on discussing a cohesive storyline. This
-  includes discussing any plotholes and characters' relationships with each other. This proved as an
+  includes discussing any plot holes and characters' relationships with each other. This proved as an
   issue at times as we worked on different days -- different parts in the story -- and we had to be
-  check in with each other, confirming that we had a mutual agreeance.
+  check in with each other, confirming that we were in agreement.
 --> Preparation is key!!
+
+Although it's a lot of work, it would've been worthwhile to include comments after every end
+  bracket. Especially in a story-based game such as our's with multiple different possible roads and
+  embedded decisions, it's important to keep track of what decisions lead to what bodies of
+  code. Additionally, this would've saved us from a lot of time spent on fixing compile time
+  errors due to missing brackets.
 
 
 ||||||||||||||||||||||||||||||||||||||||||
@@ -59,12 +71,6 @@ Before doing this project, we could have spent more time on discussing a cohesiv
   \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
    \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
     \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
-==============================================================
-
-
-2021-01-dd
---------------------------------------------------------------
-<Member> :: <Thing member did.>
 ==============================================================
 
 2022-01-13
@@ -81,8 +87,8 @@ Xinqing :: Made devlog.txt in compliance with template. Drafted UML diagram
 
 2021-01-16
 --------------------------------------------------------------
-Lindsay :: Worked on proposal and project details
-Xinqing :: Worked on proposal and project details
+Lindsay :: Worked on proposal and project details on google doc
+Xinqing :: Worked on proposal and project details on google doc
 Lindsay :: Uploaded flag.pdf
 ==============================================================
 
@@ -90,36 +96,36 @@ Lindsay :: Uploaded flag.pdf
 --------------------------------------------------------------
 Xinqing :: .gitignore overwritten with “value-added” version, worked on UML diagram
 Lindsay :: Worked on UML diagram, Worked on day 1 dialogue and choice mechanics
-Xinqing :: Worked on dialogue, Added card minigame
+Xinqing :: Worked on dialogue, Added card minigame and Card.java
 ==============================================================
 
 2021-01-19
 --------------------------------------------------------------
-Xinqing :: Added rigging option for card minigame and card game dialogue, discussed a more cohesive story line, added more day 3 story dialogue, worked on part of day 1 flowchart
-Lindsay :: Added more day 2 story dialogue, discussed a more cohesive story line, worked on part of day 1 flowchart
+Xinqing :: Added rigging option for card minigame in Card.java and card game dialogue (method playAgainstBobo()), discussed a more cohesive story line, added more day 3 story dialogue, worked on half of day 1 flowchart
+Lindsay :: Added more day 2 story dialogue (started method questionSet1()), discussed a more cohesive story line, worked on part of day 1 flowchart
 ==============================================================
 
 2021-01-20
 --------------------------------------------------------------
-Xinqing :: Fixed errors in Woo.java, fixed mechanics for the creating of friends/Civilians , added to day 3 dialogue
-Lindsay :: Working on day 2 flowchart, added to day 2 story dialogue
+Xinqing :: Fixed compile-time errors in Woo.java, fixed mechanics for the creating and choosing of friends/Civilians (used an ArrayList), added to day 3 dialogue
+Lindsay :: Working on day 2 flowchart, added to day 2 story dialogue (started methods questionSet2() and questionSet3())
 Xinqing :: Finished day 1 flowchart, added to day 3 story dialogue
 ==============================================================
 
 2021-01-21
 --------------------------------------------------------------
-Xinqing :: Fixed errors in Woo.java, Finished day 3 dialogue, Started working on Deck.java to make more card games available, Started dialogue for BlackJack game
+Xinqing :: Fixed compile-errors in Woo.java, Finished day 3 dialogue, Started working on Deck.java to make more card games available, Started dialogue for BlackJack game (method playAgainstJojo())
 ==============================================================
 
 2021-01-22
 --------------------------------------------------------------
-Lindsay :: Worked on day 2 dialogue
-Xinqing :: Finished day 4 dialogue, Worked on day 5, Added to Zone of Reflection
-Lindsay :: Finished day 4 dialogue, worked on day 5, Made visuals, Added to Zone of Refelection
+Lindsay :: Worked on day 2 dialogue (continued working on the question sets)
+Xinqing :: Finished day 4 dialogue (Worked on investigation details), Worked on day 5, Reviewed Zone of Reflection
+Lindsay :: Finished day 4 dialogue (Worked on the call with Kenna), worked on day 5, Made visuals, Added to Zone of Reflection
 ==============================================================
 
 2021-01-23
 --------------------------------------------------------------
-Lindsay :: Finished day 2 dialoue, Worked on finishing day 5 dialogue, Solved errors
-Xinqing :: Worked on finishing day 5 dialogue, Added day 6 dialogue, Added comments for each ending bracket (conciseness)
+Lindsay :: Finished day 2 dialogue, Worked on finishing day 5 dialogue (meeting Jimmy in the hallway + questioning), Solved compile-errors in Woo.java, Did the flowchart for day 4, Added many visuals to make the reading less boring (door, stairs, gun)
+Xinqing :: Worked on finishing day 5 dialogue (including the different endings), Added day 6 dialogue, Added comments for some ending brackets, Finished BlackGame game and corresponding dialogue, added BlackJack vars and methods to Character.java, did the flowchart for days 3 and 5
 ==============================================================
